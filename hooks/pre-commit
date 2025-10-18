@@ -1,0 +1,81 @@
+#!/bin/bash
+# Pre-commit hook for Meauxbility repository
+# Ensures code quality and security before commits
+
+echo "🔍 Running pre-commit checks..."
+
+# Check if we're in a git repository
+if ! git rev-parse --git-dir > /dev/null 2>&1; then
+    echo "❌ Not in a git repository"
+    exit 1
+fi
+
+# Run linting
+echo "📝 Running linter..."
+if command -v npm >/dev/null 2>&1; then
+    npm run lint
+    if [ $? -ne 0 ]; then
+        echo "❌ Linting failed. Please fix issues before committing."
+        exit 1
+    fi
+fi
+
+# Run tests
+echo "🧪 Running tests..."
+if command -v npm >/dev/null 2>&1; then
+    npm test
+    if [ $? -ne 0 ]; then
+        echo "❌ Tests failed. Please fix issues before committing."
+        exit 1
+    fi
+fi
+
+# Check for secrets
+echo "🔐 Checking for secrets..."
+# Create a temporary script to check for actual secrets
+cat > /tmp/secret_check.sh << 'EOF'
+#!/bin/bash
+# Look for actual secrets, not documentation
+find . -type f \( -name "*.js" -o -name "*.ts" -o -name "*.py" -o -name "*.java" -o -name "*.go" -o -name "*.rb" -o -name "*.php" \) \
+  -not -path "./.git/*" \
+  -not -path "./node_modules/*" \
+  -not -path "./hooks/*" \
+  -not -path "./scripts/*" \
+  -not -path "./.github/*" \
+  -not -name "*.md" \
+  -not -name "*.json" \
+  -not -name "*.yml" \
+  -not -name "*.yaml" \
+  -exec grep -l -E "(password\s*=\s*[\"'][^\"']{8,}[\"']|secret\s*=\s*[\"'][^\"']{8,}[\"']|api[_-]?key\s*=\s*[\"'][^\"']{8,}[\"']|token\s*=\s*[\"'][^\"']{8,}[\"'])" {} \; 2>/dev/null | \
+  grep -v "your_.*_here" | \
+  grep -v "process\.env" | \
+  grep -v "environment" | \
+  grep -v "example" | \
+  grep -v "placeholder" | \
+  grep -v "scanning" | \
+  grep -v "checking" | \
+  grep -v "secret.*scan" | \
+  grep -v "secret.*check"
+EOF
+
+chmod +x /tmp/secret_check.sh
+if /tmp/secret_check.sh | grep -q .; then
+    echo "❌ Potential secrets detected in source files. Please remove or use environment variables."
+    /tmp/secret_check.sh
+    rm -f /tmp/secret_check.sh
+    exit 1
+fi
+rm -f /tmp/secret_check.sh
+
+# Check file sizes
+echo "📏 Checking file sizes..."
+large_files=$(find . -type f -size +50M -not -path "./.git/*" -not -path "./node_modules/*")
+if [ ! -z "$large_files" ]; then
+    echo "❌ Large files detected (>50MB):"
+    echo "$large_files"
+    echo "Please use Git LFS or remove these files."
+    exit 1
+fi
+
+echo "✅ Pre-commit checks passed!"
+exit 0

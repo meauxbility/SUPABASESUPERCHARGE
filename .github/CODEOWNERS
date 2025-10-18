@@ -1,0 +1,32 @@
+# Code owners for Meauxbility repository
+# This file defines who can review and approve changes
+
+# Global owners
+* @brandonprimeaux
+
+# Core team members
+* @brandonprimeaux @teammate
+
+# AI Agent access (read-only for most files)
+*.js @ai-agent-primary
+*.ts @ai-agent-primary
+*.json @ai-agent-primary
+
+# Security-related files
+.github/workflows/ @brandonprimeaux @teammate
+hooks/ @brandonprimeaux @teammate
+scripts/ @brandonprimeaux @ai-agent-primary
+
+# Configuration files (restricted)
+package.json @brandonprimeaux
+env.example @brandonprimeaux
+.gitignore @brandonprimeaux
+
+# Documentation (team can edit)
+*.md @brandonprimeaux @teammate @ai-agent-primary
+docs/ @brandonprimeaux @teammate @ai-agent-primary
+
+# Security and access control
+.github/ @brandonprimeaux
+hooks/ @brandonprimeaux
+scripts/security-* @brandonprimeaux

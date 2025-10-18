@@ -1,0 +1,92 @@
+{
+  "repository": {
+    "name": "meauxbility",
+    "private": true,
+    "description": "Private Meauxbility development repository",
+    "topics": [
+      "private",
+      "team-collaboration",
+      "ai-agents",
+      "notion-integration"
+    ]
+  },
+  "team": {
+    "members": [
+      {
+        "name": "Brandon Primeaux",
+        "email": "brandon@meauxbility.org",
+        "role": "owner",
+        "permissions": [
+          "admin",
+          "write",
+          "read",
+          "review"
+        ]
+      },
+      {
+        "name": "Teammate",
+        "email": "teammate@meauxbility.org",
+        "role": "maintainer",
+        "permissions": [
+          "write",
+          "read",
+          "review"
+        ]
+      }
+    ],
+    "aiAgents": [
+      {
+        "name": "Primary AI Agent",
+        "role": "contributor",
+        "permissions": [
+          "read",
+          "write",
+          "review"
+        ]
+      },
+      {
+        "name": "Security AI Agent",
+        "role": "contributor",
+        "permissions": [
+          "read",
+          "scan"
+        ]
+      }
+    ],
+    "accessControl": {
+      "branchProtection": {
+        "main": {
+          "requiredStatusChecks": true,
+          "enforceAdmins": true,
+          "requiredPullRequestReviews": 1,
+          "dismissStaleReviews": true
+        },
+        "develop": {
+          "requiredStatusChecks": true,
+          "enforceAdmins": false,
+          "requiredPullRequestReviews": 1
+        }
+      },
+      "permissions": {
+        "admin": [
+          "Brandon Primeaux"
+        ],
+        "maintain": [
+          "Teammate"
+        ],
+        "write": [
+          "Primary AI Agent"
+        ],
+        "read": [
+          "Security AI Agent"
+        ]
+      }
+    }
+  },
+  "security": {
+    "secretScanning": true,
+    "vulnerabilityAlerts": true,
+    "dependencyReview": true,
+    "codeScanning": true
+  }
+}

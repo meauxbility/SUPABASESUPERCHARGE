@@ -1,0 +1,86 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run security scan
+        run: |
+          echo "🔒 Running security scan..."
+          # Add your security scanning tools here
+          # Example: npm audit, snyk, etc.
+
+  quality-checks:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Run tests
+        run: npm test
+
+      - name: Check for secrets
+        run: |
+          echo "🔐 Checking for secrets..."
+          if grep -r -i "password\|secret\|key\|token" --exclude-dir=.git --exclude-dir=node_modules --exclude="*.md" . | grep -v "your_.*_here"; then
+            echo "❌ Potential secrets detected"
+            exit 1
+          fi
+
+  notion-sync:
+    name: Notion Sync
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync with Notion
+        run: npm run notion:sync
+        env:
+          NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+
+  team-notification:
+    name: Team Notification
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Notify team
+        run: |
+          echo "📢 Notifying team of build status..."
+          # Add your notification logic here
+          # Example: Slack, Discord, email notifications

@@ -1,0 +1,39 @@
+#!/bin/bash
+# Pre-push hook for Meauxbility repository
+# Additional security and quality checks before pushing
+
+echo "🚀 Running pre-push checks..."
+
+# Security scan
+echo "🔒 Running security scan..."
+if command -v npm >/dev/null 2>&1; then
+    npm run security:scan
+    if [ $? -ne 0 ]; then
+        echo "❌ Security scan failed. Please fix issues before pushing."
+        exit 1
+    fi
+fi
+
+# Check for TODO/FIXME comments in production code
+echo "📋 Checking for TODO/FIXME comments..."
+if grep -r -i "todo\|fixme" --exclude-dir=.git --exclude-dir=node_modules --exclude="*.md" . | grep -v "scripts/"; then
+    echo "⚠️  TODO/FIXME comments found. Consider addressing before pushing to main."
+fi
+
+# Verify environment files
+echo "🌍 Checking environment configuration..."
+if [ ! -f ".env" ] && [ -f "env.example" ]; then
+    echo "⚠️  No .env file found. Make sure to copy env.example to .env"
+fi
+
+# Check for proper commit messages
+echo "📝 Checking commit messages..."
+commit_msg=$(git log --format=%B -n 1)
+if [[ ! $commit_msg =~ ^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?: .+ ]]; then
+    echo "⚠️  Commit message doesn't follow conventional format."
+    echo "   Format: type(scope): description"
+    echo "   Types: feat, fix, docs, style, refactor, test, chore"
+fi
+
+echo "✅ Pre-push checks completed!"
+exit 0
