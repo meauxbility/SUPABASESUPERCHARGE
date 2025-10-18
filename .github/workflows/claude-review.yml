@@ -1,0 +1,33 @@
+name: Claude AI Code Review
+on:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches: [main, develop]
+
+jobs:
+  claude-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Claude AI Review
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Review this Shopify HTML custom build for:
+            1. Code quality and best practices
+            2. Security vulnerabilities
+            3. Performance optimizations
+            4. Accessibility compliance
+            5. Shopify integration best practices
+            6. Future-proofing for independent deployment
+            
+            Focus on the project standards defined in CLAUDE.md
