@@ -13,7 +13,11 @@
     "security:scan": "echo 'Running security scan...'",
     "notion:sync": "node scripts/notion-sync.js",
     "pre-commit": "npm run lint && npm run test",
-    "pre-push": "npm run security:scan"
+    "pre-push": "npm run security:scan",
+    "claude:test": "node scripts/claude-integration.js test",
+    "claude:review": "node scripts/claude-integration.js review",
+    "claude:notion": "node scripts/claude-integration.js notion",
+    "claude:security": "node scripts/claude-integration.js security"
   },
   "keywords": [
     "private",
