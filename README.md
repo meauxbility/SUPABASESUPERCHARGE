@@ -1,4 +1,4 @@
-# Meauxbility
+# Meauxbility - Spartans Team
 
 > **Private Repository** - Access restricted to assigned team members and AI agents
 
@@ -6,10 +6,15 @@
 
 Meauxbility is a private development project focused on building innovative solutions with a strong emphasis on community, hard work, and faith-driven development.
 
+## 👥 Spartans Team
+- **Sam Primeaux** - CEO
+- **Connor Mcneely** - CTO  
+- **Fred Williams** - CMO
+
 ## 🔐 Access Control
 
 This repository is private and accessible only to:
-- **Core Team Members**: Brandon Primeaux and designated teammate
+- **Core Team Members**: Spartans team members
 - **AI Agents**: Approved AI assistants with specific access permissions
 - **Notion Integration**: Automated documentation and task management
 
@@ -24,13 +29,13 @@ This repository is private and accessible only to:
 ### Quick Start
 ```bash
 # Clone the repository
-git clone [repository-url]
+git clone https://github.com/InnerAnimal/spartans.git
 
 # Install dependencies
 npm install
 
 # Set up environment variables
-cp .env.example .env
+cp env.example .env
 
 # Run development server
 npm run dev
