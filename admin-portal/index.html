@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spartans Admin Portal - Meauxbility</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>Spartans</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <ul class="sidebar-menu">
+            <li class="menu-item active" data-section="dashboard">
+                <i class="fas fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </li>
+            <li class="menu-item" data-section="tasks">
+                <i class="fas fa-tasks"></i>
+                <span>Tasks</span>
+                <span class="badge" id="taskCount">0</span>
+            </li>
+            <li class="menu-item" data-section="team">
+                <i class="fas fa-users"></i>
+                <span>Team</span>
+            </li>
+            <li class="menu-item" data-section="projects">
+                <i class="fas fa-project-diagram"></i>
+                <span>Projects</span>
+            </li>
+            <li class="menu-item" data-section="ai">
+                <i class="fas fa-robot"></i>
+                <span>AI Assistant</span>
+            </li>
+            <li class="menu-item" data-section="analytics">
+                <i class="fas fa-chart-line"></i>
+                <span>Analytics</span>
+            </li>
+            <li class="menu-item" data-section="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <span class="user-name">Sam Primeaux</span>
+                    <span class="user-role">CEO</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                <div class="breadcrumb">
+                    <span>Home</span>
+                    <i class="fas fa-chevron-right"></i>
+                    <span id="breadcrumbCurrent">Dashboard</span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tasks, team, projects...">
+                </div>
+                
+                <div class="notifications">
+                    <button class="notification-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">3</span>
+                    </button>
+                </div>
+                
+                <div class="user-menu">
+                    <button class="user-menu-btn">
+                        <div class="user-avatar-small">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Section -->
+        <section class="content-section active" id="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Active Tasks</h3>
+                        <div class="stat-number">12</div>
+                        <div class="stat-change positive">+3 this week</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Team Members</h3>
+                        <div class="stat-number">3</div>
+                        <div class="stat-change">Spartans Team</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Active Projects</h3>
+                        <div class="stat-number">2</div>
+                        <div class="stat-change positive">Shopify + Custom</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>AI Assistance</h3>
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-change positive">Claude.ai Active</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Recent Activity</h3>
+                        <button class="btn-icon">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Code Review Completed</div>
+                                    <div class="activity-time">2 minutes ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">Claude.ai Integration Active</div>
+                                    <div class="activity-time">5 minutes ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-title">New Task Added</div>
+                                    <div class="activity-time">10 minutes ago</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="quick-actions">
+                            <button class="quick-action-btn">
+                                <i class="fas fa-plus"></i>
+                                <span>Add Task</span>
+                            </button>
+                            <button class="quick-action-btn">
+                                <i class="fas fa-user-plus"></i>
+                                <span>Invite Team</span>
+                            </button>
+                            <button class="quick-action-btn">
+                                <i class="fas fa-robot"></i>
+                                <span>AI Assistant</span>
+                            </button>
+                            <button class="quick-action-btn">
+                                <i class="fas fa-chart-line"></i>
+                                <span>View Analytics</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tasks Section -->
+        <section class="content-section" id="tasks">
+            <div class="section-header">
+                <h2>Task Management</h2>
+                <button class="btn-primary" id="addTaskBtn">
+                    <i class="fas fa-plus"></i>
+                    Add Task
+                </button>
+            </div>
+            
+            <div class="tasks-container">
+                <div class="task-filters">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="in-progress">In Progress</button>
+                    <button class="filter-btn" data-filter="completed">Completed</button>
+                </div>
+                
+                <div class="tasks-list" id="tasksList">
+                    <!-- Tasks will be dynamically added here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section class="content-section" id="team">
+            <div class="section-header">
+                <h2>Team Members</h2>
+                <button class="btn-primary">
+                    <i class="fas fa-user-plus"></i>
+                    Add Member
+                </button>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="team-info">
+                        <h3>Sam Primeaux</h3>
+                        <p>CEO</p>
+                        <div class="team-status online">Online</div>
+                    </div>
+                    <div class="team-actions">
+                        <button class="btn-icon">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                        <button class="btn-icon">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="team-info">
+                        <h3>Connor Mcneely</h3>
+                        <p>CTO</p>
+                        <div class="team-status online">Online</div>
+                    </div>
+                    <div class="team-actions">
+                        <button class="btn-icon">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                        <button class="btn-icon">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="team-info">
+                        <h3>Fred Williams</h3>
+                        <p>CMO</p>
+                        <div class="team-status offline">Offline</div>
+                    </div>
+                    <div class="team-actions">
+                        <button class="btn-icon">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                        <button class="btn-icon">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="content-section" id="projects">
+            <div class="section-header">
+                <h2>Active Projects</h2>
+                <button class="btn-primary">
+                    <i class="fas fa-plus"></i>
+                    New Project
+                </button>
+            </div>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Shopify Custom Build</h3>
+                        <div class="project-status in-progress">In Progress</div>
+                    </div>
+                    <div class="project-content">
+                        <p>Custom HTML modals and API integration for Shopify platform</p>
+                        <div class="project-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                            <span class="progress-text">65% Complete</span>
+                        </div>
+                        <div class="project-meta">
+                            <span><i class="fas fa-calendar"></i> Due: Dec 15, 2024</span>
+                            <span><i class="fas fa-users"></i> Team: 3 members</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Independent Platform</h3>
+                        <div class="project-status planning">Planning</div>
+                    </div>
+                    <div class="project-content">
+                        <p>Migration from Shopify to independent platform with AI integration</p>
+                        <div class="project-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 25%"></div>
+                            </div>
+                            <span class="progress-text">25% Complete</span>
+                        </div>
+                        <div class="project-meta">
+                            <span><i class="fas fa-calendar"></i> Due: Mar 15, 2025</span>
+                            <span><i class="fas fa-users"></i> Team: 3 members</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Assistant Section -->
+        <section class="content-section" id="ai">
+            <div class="section-header">
+                <h2>AI Assistant</h2>
+                <div class="ai-status">
+                    <div class="status-indicator online"></div>
+                    <span>Claude.ai Active</span>
+                </div>
+            </div>
+            
+            <div class="ai-dashboard">
+                <div class="ai-card">
+                    <div class="ai-header">
+                        <h3>Claude.ai Integration</h3>
+                        <div class="ai-status-badge active">Active</div>
+                    </div>
+                    <div class="ai-content">
+                        <div class="ai-stats">
+                            <div class="ai-stat">
+                                <span class="ai-stat-label">Code Reviews</span>
+                                <span class="ai-stat-value">24</span>
+                            </div>
+                            <div class="ai-stat">
+                                <span class="ai-stat-label">Suggestions</span>
+                                <span class="ai-stat-value">156</span>
+                            </div>
+                            <div class="ai-stat">
+                                <span class="ai-stat-label">Security Scans</span>
+                                <span class="ai-stat-value">8</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary">
+                            <i class="fas fa-robot"></i>
+                            Start AI Session
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="ai-card">
+                    <div class="ai-header">
+                        <h3>ChatGPT Integration</h3>
+                        <div class="ai-status-badge active">Active</div>
+                    </div>
+                    <div class="ai-content">
+                        <div class="ai-stats">
+                            <div class="ai-stat">
+                                <span class="ai-stat-label">Research Tasks</span>
+                                <span class="ai-stat-value">12</span>
+                            </div>
+                            <div class="ai-stat">
+                                <span class="ai-stat-label">Content Generated</span>
+                                <span class="ai-stat-value">45</span>
+                            </div>
+                            <div class="ai-stat">
+                                <span class="ai-stat-label">Problem Solving</span>
+                                <span class="ai-stat-value">18</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary">
+                            <i class="fas fa-comments"></i>
+                            Start Chat Session
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section class="content-section" id="analytics">
+            <div class="section-header">
+                <h2>Analytics Dashboard</h2>
+                <div class="analytics-controls">
+                    <select class="analytics-filter">
+                        <option>Last 7 days</option>
+                        <option>Last 30 days</option>
+                        <option>Last 90 days</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <h3>Task Completion</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-pie"></i>
+                        <p>Task completion chart will be rendered here</p>
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <h3>Team Productivity</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-bar"></i>
+                        <p>Team productivity metrics will be displayed here</p>
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <h3>AI Usage</h3>
+                    <div class="chart-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <p>AI assistant usage analytics will be shown here</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section class="content-section" id="settings">
+            <div class="section-header">
+                <h2>Settings</h2>
+            </div>
+            
+            <div class="settings-container">
+                <div class="settings-section">
+                    <h3>General Settings</h3>
+                    <div class="setting-item">
+                        <label>Theme</label>
+                        <select>
+                            <option>Dark</option>
+                            <option>Light</option>
+                            <option>Auto</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Notifications</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h3>AI Settings</h3>
+                    <div class="setting-item">
+                        <label>Claude.ai API Key</label>
+                        <input type="password" placeholder="Enter API key">
+                    </div>
+                    <div class="setting-item">
+                        <label>ChatGPT Integration</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Task Modal -->
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Task</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="taskForm">
+                    <div class="form-group">
+                        <label>Task Title</label>
+                        <input type="text" id="taskTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="taskDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="taskPriority">
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" id="taskDueDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Assign To</label>
+                        <select id="taskAssignee">
+                            <option value="sam">Sam Primeaux</option>
+                            <option value="connor">Connor Mcneely</option>
+                            <option value="fred">Fred Williams</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelTask">Cancel</button>
+                <button class="btn-primary" id="saveTask">Save Task</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
