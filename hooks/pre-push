@@ -29,7 +29,7 @@ fi
 # Check for proper commit messages
 echo "📝 Checking commit messages..."
 commit_msg=$(git log --format=%B -n 1)
-if [[ ! $commit_msg =~ ^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?: .+ ]]; then
+if [[ ! $commit_msg =~ ^(feat|fix|docs|style|refactor|test|chore)(\([^)]+\))?: .+ ]]; then
     echo "⚠️  Commit message doesn't follow conventional format."
     echo "   Format: type(scope): description"
     echo "   Types: feat, fix, docs, style, refactor, test, chore"
