@@ -124,3 +124,12 @@ agent-logs/
 *.key
 *.crt
 secrets/
+*.p12
+credentials.json
+token.json
+
+# env & secrets (Safe Start additions)
+.env
+.env.*
+!.env.example
+.envrc

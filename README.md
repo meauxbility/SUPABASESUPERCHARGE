@@ -78,3 +78,19 @@ For access issues or questions, contact the repository administrators.
 ---
 
 **Note**: This project emphasizes the power of hard work, willpower, inspiration, community, and faith in development.
+
+---
+
+### macOS Keychain Helper (Safe Secrets)
+
+Use scripts/keychain.sh to store and read secrets without writing files:
+
+```
+# Save a secret
+scripts/keychain.sh set ANTHROPIC_API_KEY "sk-ant-..."
+
+# Load into env (current shell)
+export ANTHROPIC_API_KEY="$(scripts/keychain.sh get ANTHROPIC_API_KEY)"
+```
+
+Keep runtime values in .env.local (git-ignored). Never commit secrets.

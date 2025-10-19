@@ -5,6 +5,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "bootstrap": "bash scripts/bootstrap.sh",
+    "secrets:check": "bash scripts/secrets-check.sh",
     "dev": "echo 'Development server starting...'",
     "build": "echo 'Building project...'",
     "test": "echo 'Running tests...'",
@@ -14,6 +16,8 @@
     "notion:sync": "node scripts/notion-sync.js",
     "pre-commit": "npm run lint && npm run test",
     "pre-push": "npm run security:scan",
+    "dev:proxy": "pnpm --filter @meauxbility/proxy dev",
+    "build:proxy": "pnpm --filter @meauxbility/proxy build",
     "claude:test": "node scripts/claude-integration.js test",
     "claude:review": "node scripts/claude-integration.js review",
     "claude:notion": "node scripts/claude-integration.js notion",

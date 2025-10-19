@@ -1,0 +1,8 @@
+title = "Meauxbility Gitleaks Config"
+[allowlist]
+paths = [
+  '''\.github/workflows/ci\.yml''',
+  '''\.env\.example'''
+]
+
+
