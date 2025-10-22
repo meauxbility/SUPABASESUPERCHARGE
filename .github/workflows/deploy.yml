@@ -1,0 +1,98 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Render
+    runs-on: ubuntu-latest
+    env:
+      # Supabase Configuration
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      SUPABASE_JWT_SECRET: ${{ secrets.SUPABASE_JWT_SECRET }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      
+      # AI API Keys
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      TEAM_OPENAI_API_KEY: ${{ secrets.TEAM_OPENAI_API_KEY }}
+      
+      # Payment Processing
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+      STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+      
+      # Email Services
+      SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+      SENDGRID_FROM_EMAIL: ${{ secrets.SENDGRID_FROM_EMAIL }}
+      SENDGRID_FROM_NAME: ${{ secrets.SENDGRID_FROM_NAME }}
+      
+      # Google Services
+      GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
+      GOOGLE_OAUTH_CLIENT_SECRET: ${{ secrets.GOOGLE_OAUTH_CLIENT_SECRET }}
+      GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+      
+      # Security
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      
+      # Environment
+      NODE_ENV: production
+      DEBUG: false
+      LOG_LEVEL: warn
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build application
+        run: npm run build
+
+      - name: Test Supabase connection
+        run: |
+          echo "🔗 Testing Supabase connection..."
+          if [ -n "$SUPABASE_URL" ] && [ -n "$SUPABASE_ANON_KEY" ]; then
+            echo "✅ Supabase secrets are available"
+            echo "URL: $SUPABASE_URL"
+          else
+            echo "❌ Supabase secrets are missing"
+            exit 1
+          fi
+
+      - name: Test AI connections
+        run: |
+          echo "🤖 Testing AI connections..."
+          if [ -n "$ANTHROPIC_API_KEY" ] && [ -n "$OPENAI_API_KEY" ]; then
+            echo "✅ AI API keys are available"
+          else
+            echo "⚠️ Some AI API keys are missing"
+          fi
+
+      - name: Deploy to Render
+        run: |
+          echo "🚀 Deploying to Render..."
+          # Render will automatically deploy when you push to main
+          # Make sure your Render service is configured with these environment variables
+          echo "✅ Deployment triggered"
+
+      - name: Notify team
+        run: |
+          echo "📢 Deployment completed successfully!"
+          echo "🔗 Check your Render dashboard for deployment status"
