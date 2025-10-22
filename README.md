@@ -215,10 +215,10 @@ meauxbility-supabase/
 5. Test basic functionality
 
 ### Phase 2: API Integration (Tomorrow)
-1. Collect API keys (Stripe, SendGrid, Google OAuth)
+1. Collect API keys (Stripe, notion, Google OAuth)
 2. Configure environment variables
 3. Test payment processing
-4. Test email delivery
+4. Test email delivery ( please help with this, i have @meauxbility.org emails but havent been able to connect )
 5. Test social login
 
 ### Phase 3: Production Launch
