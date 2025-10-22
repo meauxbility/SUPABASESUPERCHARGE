@@ -1,0 +1,49 @@
+{
+  "name": "meauxbility-ai-integrations",
+  "version": "1.0.0",
+  "description": "AI integration package for Meauxbility platform - Claude, ChatGPT, and Team ChatGPT",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node test-integrations.js",
+    "setup": "node setup-integrations.js",
+    "claude:test": "node -e \"import('./claude_supabase_integration.js').then(m => m.testClaudeConnection())\"",
+    "chatgpt:test": "node -e \"import('./chatgpt_supabase_integration.js').then(m => m.testChatGPTConnection())\"",
+    "team:test": "node -e \"import('./team_chatgpt_integration.js').then(m => m.testTeamChatGPTConnection())\"",
+    "install:all": "npm install && npm run setup",
+    "deploy:supabase": "supabase functions deploy ai-workflows",
+    "deploy:viasocket": "node deploy-viasocket.js"
+  },
+  "keywords": [
+    "ai",
+    "claude",
+    "chatgpt",
+    "supabase",
+    "automation",
+    "nonprofit",
+    "meauxbility"
+  ],
+  "author": "Meauxbility Team",
+  "license": "MIT",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "@anthropic-ai/sdk": "^0.17.1",
+    "openai": "^4.20.1",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/meauxbility/SUPABASESUPERCHARGE.git"
+  },
+  "bugs": {
+    "url": "https://github.com/meauxbility/SUPABASESUPERCHARGE/issues"
+  },
+  "homepage": "https://github.com/meauxbility/SUPABASESUPERCHARGE#readme"
+}
