@@ -777,4 +777,249 @@ Your database is ready. Your documentation is ready. Your team is ready.
 
 **Questions?** Check the documentation or reach out to the team.
 
-**Let's make the world more accessible!** 🌍✨
+**Let's make the world more accessible!** 🌍✨ https://meauxbility.org/
+
+# Business Dossier: Meauxbility
+
+## Snapshot
+
+- **Entity:** 501(c)(3) nonprofit, EIN **33-4214907** (Louisiana governing law in ToS). ([Meauxbility](https://meauxbility.org/)) ([Meauxbility](https://meauxbility.org/pages/non-profit-information))
+- **Mission (in plain words):** Built by a survivor for survivors—connect people with spinal cord injuries (SCI) to funding, treatments/tech, and community to accelerate recovery. ([Meauxbility](https://meauxbility.org/))
+- **Core pillars:** Ambition, Adaptability, Empowerment, Integrity, Courage. ([Meauxbility](https://meauxbility.org/pages/about-us))
+- **Programs (current):**
+    - Mobility Equipment Grants ($500–$5,000 typical range)
+    - Home Accessibility Modification Grants
+    - Technology Access Initiative (adaptive tech, comms devices, smart home)
+    - Streamlined application/eligibility flow prioritizing SCI, low/mod income, veterans, seniors. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- **Active campaign example:** DonMichael’s wheelchair fundraiser (goal $10,000). ([Meauxbility](https://meauxbility.org/))
+- **Community/brand assets:** Resource Library (guides, templates), athlete stories, partners page, donate and get-involved flows. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+
+## Problem & Need (from site)
+
+- **Barriers:** Cost (1st-year SCI up to **$1.4M**, lifetime up to **$6.3M**), knowledge (families waste time searching), access (equipment exists but unreachable). ([Meauxbility](https://meauxbility.org/))
+
+## Target Beneficiaries & Stakeholders
+
+- **Primary:** Individuals with SCI and mobility challenges; caregivers/families.
+- **Priority cohorts:** Low-/moderate-income households, **veterans**, **seniors** aging in place. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- **Secondary stakeholders:** Rehab centers, ATPs/OTs/PTs, equipment vendors, adaptive sports orgs, corporate sponsors, donors/volunteers. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+
+## Offer & Differentiation
+
+- **Offer:** Direct financial assistance + curated guidance + community mentorship. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- **Edge:** Founder’s lived-experience narrative with transparent ethics (direct payments, donor privacy, whistleblower, gift acceptance, etc.). ([Meauxbility](https://meauxbility.org/pages/about-us))
+
+## Current Proof Points
+
+- Program definitions, application funnel, designate-your-gift donation options (Where Most Needed / specific campaigns). ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+
+## SWOT (evidence-based + inferred)
+
+- **Strengths**
+    - Clear, compelling founder story; strong mission language. ([Meauxbility](https://meauxbility.org/pages/about-us))
+    - Well-defined grant programs and eligibility flow. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+    - Compliance & transparency pages in place (ToS, donor privacy, whistleblower, etc.). ([Meauxbility](https://meauxbility.org/pages/non-profit-information))
+- **Weaknesses**
+    - Early-stage traction signals (e.g., small live campaign totals shown on site). ([Meauxbility](https://meauxbility.org/))
+    - Some “Impact Report”/“Policies” links not resolving publicly (404), which can dampen credibility if shared.
+- **Opportunities**
+    - Partner acquisition with rehab networks, VA hospitals, DME vendors; athlete-led peer mentorship loops. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+    - Content-driven donor education around SCI costs and outcomes tied to specific grants. ([Meauxbility](https://meauxbility.org/))
+- **Threats**
+    - Donor fatigue/competition with larger national orgs; economic cycles impacting small-gift volume. *(General nonprofit risk; no site citation required.)*
+
+---
+
+# 12-Month Business Plan (practical, lean, measurable)
+
+## 1) Impact Thesis & Program Targets
+
+Tie every appeal to a defined unit of impact.
+
+- **Annual output targets (12 months):**
+    - 60 Mobility Equipment micro-grants (avg $2,000)
+    - 20 Home Access micro-grants (avg $3,500)
+    - 25 Tech Access grants (avg $1,200)
+    - 1–2 flagship individual campaigns/quarter (e.g., $10k wheelchair builds)
+        
+        *All program categories and grant bands aligned to current site language.* ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+        
+- **Outcome metrics (track monthly):** independence scores (self-report), therapy adherence, hours of community participation, days to fulfill grants, $/impact unit.
+
+## 2) Funding Model & Targets
+
+**Revenue mix goal (12 months):** $350k total
+
+- **Small-gift donors:** $90k (avg gift $40; 2,250 gifts via social + email)
+- **Mid-level donors:** $80k (50 donors avg $1.6k via founder calls + donor journeys)
+- **Major donors/sponsors:** $120k (8 sponsors avg $15k; naming rights for grant pools/events)
+- **Individual beneficiary campaigns:** $40k (4 × $10k stories like DonMichael) ([Meauxbility](https://meauxbility.org/))
+- **Merch/affiliate/resource bundles:** $20k (adaptive gear affiliates; resource bundles curated from Library) ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+
+> Assumptions are conservative for an early-stage org and can be scaled with list growth.
+> 
+
+## 3) Signature Programs & Offers (packaged)
+
+1. **Mobility Micro-Grants “60 in 12”**
+    - Sponsorable at $2,500 each (covers admin + avg grant). Donor receives a 1-page impact brief (before/after, vendor invoice summary). ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+2. **Home Access Fast-Track**
+    - 14-day decision SLA with vendor quote concierge; $5k sponsorship level; “Presented by ” landing and quarterly roll-up. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+3. **Tech for Independence**
+    - $1,200 avg—bundle comms device + training; sponsor at $1,500 to include post-award check-in. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+4. **Story-Driven Hero Campaigns** (e.g., DonMichael)
+    - 6-week storytelling sprints with weekly video updates and direct designations at checkout. ([Meauxbility](https://meauxbility.org/))
+
+## 4) Partnerships (pipeline & activation)
+
+- **Clinical/Rehab:** Shepherd Center, Craig Hospital, TIRR Memorial Hermann—pilot referral MOUs; co-host “How to Fund the First 90 Days” virtual clinics. *(Program fit inferred; structure matches site’s collaboration stance.)* ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- **Vendors/ATPs:** Local DME shops + national vendors for quote-to-fulfillment SLAs and 5–10% discount to stretch grants. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- **Veterans & Seniors:** County VSOs, Area Agencies on Aging—co-screening days for eligibility priority groups. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- **Corporate:** Wheel/fitness, med-device, adaptive sports brands—year-long category sponsorship of a program lane (naming + content). ([Meauxbility](https://meauxbility.org/))
+
+## 5) Marketing & Growth Engine
+
+**Core story:** “More Options + More Access = More Life.” (Use exactly as on site.) ([Meauxbility](https://meauxbility.org/pages/about-us))
+
+- **Funnel:**
+    - **Top:** 30–60s reels of founder/athletes, “Cost-Knowledge-Access” explainer clips (use site stats for hooks). ([Meauxbility](https://meauxbility.org/))
+    - **Mid:** Resource Library lead magnets—Insurance Appeal Template, Grant Checklist, ADA rights guide (email for download). ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+    - **Bottom:** Designated-gift checkout (Where Most Needed + specific campaigns). ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- **Cadence:**
+    - 2 reels/wk, 1 founder letter/wk, 1 resource spotlight/wk, 1 partner intro/mo, 1 case study/mo.
+    - Quarterly “Impact Town Hall” livestream with Q&A and live giving thermometer tied to a campaign.
+- **Brand Safety/Trust:** Prominently display EIN, privacy/whistleblower policies on donate flows and footers. ([Meauxbility](https://meauxbility.org/pages/non-profit-information))
+
+## 6) Product & Ops
+
+- **Grant Ops SOP (from the site flow):**
+    1. **Application intake** (form + docs) → 2) **Eligibility check** (priority cohorts) → 3) **Consult** (needs & vendor quotes) → 4) **Award** (direct-to-vendor) → 5) **Fulfillment** (delivery/fit) → 6) **Follow-up** (safety & outcome survey). ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- **SLAs:** eligibility decision in 10 business days; payout 10 business days post-approval; fulfillment within 30 days of vendor invoice.
+- **Data & Impact Tracking:** application status, time-to-decision, $ granted, vendor, device category, beneficiary outcomes (pre/post independence score), content permissions (media release). ([Meauxbility](https://meauxbility.org/pages/non-profit-information))
+
+## 7) Team & Roles (lean)
+
+- **Founder/ED (public face):** storytelling, major donors, partnerships, program integrity. ([Meauxbility](https://meauxbility.org/pages/about-us))
+- **Programs Manager (0.5–1.0 FTE):** intake → award pipeline.
+- **Development Lead (contract/pt):** monthly giving, mid/major donor journeys.
+- **Content Producer (pt):** resource library packaging + socials. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- **Volunteer Corps:** peer mentors, application mentors, live-event crew. ([Meauxbility](https://meauxbility.org/))
+
+## 8) Budget (high-level, Year 1)
+
+- **Programs (direct awards):** $250k
+- **Ops (tools, compliance, audit, insurance):** $35k (Stripe/CRM, email, website, video)
+- **Personnel (lean mix of FTE/contract):** $120k
+- **Marketing/content/events:** $35k
+- **Total:** **$440k** (cover via $350k raised + $90k beginning cash/bridge or scoped-down awards to match run-rate)
+
+> If runway is tighter, scale the grant counts proportionally each quarter.
+> 
+
+## 9) KPIs & Dashboard
+
+- **Inputs:** Site sessions → email subs → completed applications → qualified apps → awards.
+- **Financials:** CAC/donor, donor retention %, average gift, % designated vs. general.
+- **Program:** time-to-award, $/beneficiary, fulfillment time, satisfaction score, independence delta.
+- **Comms:** open/click, video completion, story shares, partner referrals.
+
+## 10) Risk & Compliance
+
+- Keep donor privacy/whistleblower/gift acceptance visible and referenced in donation receipts and sponsorship decks; align governing law references with Louisiana counsel. ([Meauxbility](https://meauxbility.org/pages/non-profit-information))
+- Build a vendor policy for discounts, conflict of interest, and safety/quality checks (matches the site’s “safety & follow-ups” language). ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+
+---
+
+# 90-Day Launch Plan (checklist)
+
+**Weeks 1–2**
+
+- Fix broken public links (Impact Report / Policies pages) and publish a 1-pager “2025 Snapshot” until the full report is ready.
+- Stand up CRM + donation journeys: welcome series, “Why Meauxbility” letter, monthly giving page (designations intact). ([Meauxbility](https://meauxbility.org/))
+
+**Weeks 3–6**
+
+- Partner sprint: secure 3 rehab center referral MOUs + 3 vendor discount MOUs. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- Launch **Hero Campaign #1** (like DonMichael) with 6-week content calendar (shorts + weekly live). ([Meauxbility](https://meauxbility.org/))
+- Publish 3 Resource Library lead magnets as email gates (Insurance Appeal, Grant Checklist, ADA Rights). ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+
+**Weeks 7–12**
+
+- “60 in 12” micro-grant drive—sell 10 sponsorships at $2.5k each with donor-branded briefs. ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+- First **Impact Town Hall** livestream; public dashboard MVP (awards, $ raised, days-to-award).
+- Quarterly board/development review; adjust targets.
+
+---
+
+# Ready-to-Use Assets (copy blocks)
+
+**Value Prop (homepage/video):**
+
+“Built by a survivor for survivors. We turn funding, mentorship, and proven recovery steps into real-world progress—because More Options + More Access = More Life.” ([Meauxbility](https://meauxbility.org/))
+
+**Sponsor Hook (email/one-pager):**
+
+“Fund a grant. Watch it change a life. For $2,500 you underwrite a Mobility Micro-Grant and receive a before/after impact brief with vendor invoice summary.” ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+
+**Partner Hook (rehab/DME):**
+
+“Refer qualified patients; we fast-track quotes and pay vendors directly with post-award safety checks.” ([Meauxbility](https://meauxbility.org/pages/mobility-grants-programs))
+
+---
+
+If you want, I can turn this into:
+
+- a **one-page sponsor deck**,
+- a **grant-maker LOI template**, and
+- a **dashboard spreadsheet** for tracking those KPIs.
+
+Focus on Meauxbility - Philanthropy 
+
+Inner animals. com -nclothing apparel; Priminent instinct 
+
+Sam Preimeau person brand - motivation, streaming content, content creation
+
+1. Meauxibility Website Audit
+2. Automate functionalities of it.
+
+Setting up APIs
+
+Getting shopify 
+
+Hookup Stripe Gateway
+
+Tilt card meauxbility fall
+
+Get swift with terminals and bash
+
+- Search for spinal s
+
+Shopify connor recovery code:
+
+```
+    Shopify recovery codes
+
+```
+
+Account email: [connordmcneely@gmail.com](mailto:connordmcneely@gmail.com)
+Generated: 2025-10-18 19:23:48 UTC
+
+A482-ECED-7A29
+69D1-60F4-9CB8
+AA1E-1689-E350
+3877-5779-3763
+1708-955B-FDFA
+C760-3B6A-F28D
+BE66-C907-A4EE
+7258-CE7B-E6BA
+717F-6E87-EFA8
+881A-D930-6C13
+
+https://workspace.google.com/u/1/dashboard
+
+https://myaccount.google.com/family/details?pli=1
+
+Temp to-do-list:
+
+- Proper icons svg for admin dashboard UIs.
+-
