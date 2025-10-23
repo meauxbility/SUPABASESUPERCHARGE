@@ -1,0 +1,51 @@
+services:
+  - type: web
+    name: meauxbility-app
+    env: node
+    region: oregon
+    plan: starter
+    branch: main
+    autoDeploy: true
+    rootDir: apps/dashboard-render
+
+    buildCommand: |
+      corepack enable
+      npm ci
+      npm run build
+    startCommand: |
+      npm run start
+
+    healthCheckPath: /api/healthz
+
+    envVars:
+      # ---------- Public (safe for browser) ----------
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: NEXT_PUBLIC_GA4_MEASUREMENT_ID
+        sync: false
+
+      # ---------- Server-only secrets ----------
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: NOTION_API_KEY
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+
+      # ---------- System variables ----------
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
