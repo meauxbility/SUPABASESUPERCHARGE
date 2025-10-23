@@ -1,16 +1,43 @@
+#!/bin/bash
+
 # =====================================================================
-# MEAUXBILITY ENVIRONMENT VARIABLES TEMPLATE
+# MEAUXBILITY SUPABASE ENVIRONMENT SETUP
 # =====================================================================
-# Copy this file to .env and fill in your actual values
-# NEVER commit .env to git - it's already in .gitignore
+# This script sets up the Supabase environment variables for the project
+# Run this script to configure your local development environment
+
+echo "🚀 Setting up Meauxbility Supabase Environment..."
+
+# Project Configuration
+PROJECT_ID="ghiulqoqujsiofsjcrqk"
+SUPABASE_URL="https://${PROJECT_ID}.supabase.co"
+ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoaXVscW9xdWpzaW9mc2pjcnFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5NjAwOTAsImV4cCI6MjA3NjUzNjA5MH0.gJc7lCi9JMVhNAdon44Zuq5hT15EVM3Oyi-iszfJWSA"
+
+echo "📋 Project Details:"
+echo "   Project Name: meauxbility-production"
+echo "   Project ID: ${PROJECT_ID}"
+echo "   Supabase URL: ${SUPABASE_URL}"
+
+# Create .env file in project root
+echo "📝 Creating .env file..."
+cat > .env << EOF
+# =====================================================================
+# MEAUXBILITY ENVIRONMENT VARIABLES
+# =====================================================================
+# Production Supabase Configuration
+# Project: meauxbility-production
+# Project ID: ${PROJECT_ID}
 
 # =====================================================================
 # SUPABASE CONFIGURATION
 # =====================================================================
-# Get these from your Supabase project dashboard
-SUPABASE_URL=https://ghiulqoqujsiofsjcrqk.supabase.co
-SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoaXVscW9xdWpzaW9mc2pjcnFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5NjAwOTAsImV4cCI6MjA3NjUzNjA5MH0.gJc7lCi9JMVhNAdon44Zuq5hT15EVM3Oyi-iszfJWSA
+SUPABASE_URL=${SUPABASE_URL}
+SUPABASE_ANON_KEY=${ANON_KEY}
 SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.your-service-role-key-here
+
+# Next.js Public Variables (for client-side access)
+NEXT_PUBLIC_SUPABASE_URL=${SUPABASE_URL}
+NEXT_PUBLIC_SUPABASE_ANON_KEY=${ANON_KEY}
 
 # =====================================================================
 # AI API KEYS
@@ -77,11 +104,35 @@ DEBUG=true
 
 # Log level
 LOG_LEVEL=info
+EOF
 
-# =====================================================================
-# PRODUCTION OVERRIDES
-# =====================================================================
-# Uncomment and modify for production
-# NODE_ENV=production
-# DEBUG=false
-# LOG_LEVEL=warn
+# Create .env.local for dashboard-render app
+echo "📝 Creating dashboard-render .env.local file..."
+cat > apps/dashboard-render/.env.local << EOF
+# Dashboard Render App Environment Variables
+# Supabase Production Configuration
+
+NEXT_PUBLIC_SUPABASE_URL=${SUPABASE_URL}
+NEXT_PUBLIC_SUPABASE_ANON_KEY=${ANON_KEY}
+
+# Development settings
+NODE_ENV=development
+PORT=3000
+EOF
+
+echo "✅ Environment setup complete!"
+echo ""
+echo "📁 Files created:"
+echo "   - .env (project root)"
+echo "   - apps/dashboard-render/.env.local"
+echo ""
+echo "🔧 Next steps:"
+echo "   1. Update the service role key in .env (get from Supabase dashboard)"
+echo "   2. Add your API keys for AI services, Stripe, etc."
+echo "   3. Run 'npm install' in apps/dashboard-render/"
+echo "   4. Run 'npm run dev' to start the development server"
+echo ""
+echo "🔒 Security Note:"
+echo "   - Never commit .env files to git"
+echo "   - Keep your API keys secure"
+echo "   - Use different keys for development and production"

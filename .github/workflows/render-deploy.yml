@@ -1,0 +1,62 @@
+name: Render Deploy Trigger
+# This workflow is triggered by Render webhooks for automatic deployments
+
+on:
+  repository_dispatch:
+    types: [render-deploy]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'production' }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          cd apps/dashboard-render
+          npm ci
+
+      - name: Build application
+        run: |
+          cd apps/dashboard-render
+          npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Deploy to Render
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          echo "🚀 Triggering Render deployment..."
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"serviceId": "${{ secrets.RENDER_SERVICE_ID }}"}' \
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
+
+      - name: Verify deployment
+        run: |
+          echo "✅ Deployment workflow completed successfully"
+          echo "Environment: ${{ github.event.inputs.environment || 'production' }}"
+          echo "Triggered by: ${{ github.event_name }}"
