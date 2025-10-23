@@ -1,3 +1,127 @@
+Meauxbility Platform Architecture Overview
+
+This document summarises the architecture and deployment process for the Meauxbility nonprofit platform. It consolidates the existing documentation provided by the team and updates it to reflect the current stack: Render is used instead of Vercel for hosting, the Shopify API has been removed, and Gmail SMTP is used for transactional email instead of other email services.
+
+1. High‑Level Architecture
+
+Frontend – A Next.js/React application built with TypeScript and Tailwind CSS. It is hosted on Render as either a static site or a web service. Render is chosen because it allows multi‑service architectures and long‑running tasks; the platform can host both the frontend and backend while providing persistent storage and cron jobs
+render.com
+. Deployments are triggered from GitHub and Render automatically provisions TLS certificates, CDN caching and environment variable management.
+
+Backend (Supabase) – The platform uses Supabase as an open‑source backend‑as‑a‑service. Supabase is a serverless, Postgres‑based alternative to Firebase
+bejamas.com
+. It offers:
+
+Postgres database with 38 tables covering user management, finance, volunteers, events, e‑commerce, content, collaboration, system settings and communication.
+
+Authentication – built‑in auth with magic links, email/password, phone and social logins
+bejamas.com
+; row‑level security (89 policies) ensures fine‑grained permissions.
+
+Storage – S3‑like buckets for file uploads
+bejamas.com
+.
+
+Functions and triggers – 16 SQL functions and 18 triggers automate tasks such as weekly reports, daily metrics, donation receipts and campaign tracking.
+
+Real‑time features – Supabase realtime subscriptions and broadcast channels allow live data updates
+bejamas.com
+.
+
+Payment Processing (Stripe) – Donations and product purchases are handled via Stripe. Supabase edge functions or server routes are used to create checkout sessions and process webhooks. Environment variables STRIPE_PUBLISHABLE_KEY, STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET must be configured.
+
+Email Delivery (Gmail SMTP) – Transactional email (welcome emails, password resets, donation receipts, notifications, weekly reports) is sent using Gmail’s SMTP service via app‑specific passwords. Personal Gmail accounts are limited to 500 emails per day, while Google Workspace accounts can send up to 2,000 emails per day
+trulyinbox.com
+. Dedicated services like SendGrid offer higher volumes and analytics, but Gmail is sufficient for low‑volume transactional mail
+serverfault.com
+.
+
+Analytics and OAuth – Google Analytics 4 is used for site analytics; Google OAuth provides social login. Their measurement IDs and client credentials are stored in environment variables.
+
+AI Integrations – Optional integrations with Anthropic Claude and OpenAI/ChatGPT provide automated content generation, donation thank‑you emails, volunteer application scoring and team collaboration. These services require API keys and are orchestrated through the ai-integrations module.
+
+Infrastructure & Hosting (Render) – Render hosts the frontend and optionally backend services. Render supports long‑running web services, persistent disks, cron jobs and background workers
+render.com
+. DNS records are configured to point the domain to Render’s A and CNAME records. Render also manages SSL certificates and provides environment variable management.
+
+2. Data Model Overview
+
+The Supabase schema includes 38 tables organised into several logical groups:
+
+Category	Purpose
+User Management	users, profiles, roles – store user accounts, profile information and role assignments.
+Financial	donations, campaigns, grants, payments, financial_reports – track one‑time and recurring donations, fundraising campaigns, grant applications and financial reporting.
+Volunteers	volunteer_applications, volunteer_hours – manage volunteer onboarding and time tracking.
+Events	events, attendees, calls – schedule physical/virtual events, manage RSVPs, store meeting recordings and AI‑generated notes.
+E‑commerce	products, orders, order_items – sell digital and physical products. Note: the previous Shopify integration has been removed; orders are now handled directly through Supabase and Stripe.
+Content	posts, ai_content, uploads – blog posts, AI‑generated content and user uploads.
+Collaboration	projects, project_members, tasks, comments – manage internal projects, tasks and discussions.
+System & Communications	settings, api_keys, analytics, notifications, email_queue, etc. – store configuration, track metrics and queue emails.
+
+Row‑level security policies, helper functions and triggers enforce access control and automate business logic.
+
+3. Deployment Workflow (Render)
+
+Create Supabase project – Use the Supabase dashboard to create a new project. Record the SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY and SUPABASE_JWT_SECRET.
+
+Run migrations – In the Supabase SQL editor, run the SQL files in order: migrations (001_initial_schema.sql, 006_add_backup_emails.sql), policies (002_rls_policies.sql), functions (003_functions_triggers.sql), storage (004_storage_buckets.sql) and seeds (005_seed_data.sql). This sets up the tables, policies, functions and initial data.
+
+Create admin accounts – Sign up Sam, Connor and Fred via the application and update the profiles table to assign roles and backup emails.
+
+Set up scheduled jobs – Enable the pg_cron extension and schedule cron jobs for weekly reports and daily metric updates:
+
+CREATE EXTENSION IF NOT EXISTS pg_cron;
+SELECT cron.schedule('weekly-ceo-report', '0 13 * * 0', $$SELECT public.generate_weekly_ceo_report()$$);
+SELECT cron.schedule('daily-dashboard-metrics', '0 5 * * *', $$SELECT public.update_daily_dashboard_metrics()$$);
+
+
+Configure Render services –
+
+Frontend: Push the Next.js code to GitHub and import it into Render. In the Render dashboard, create a new Web Service or Static Site, connect the repo and set environment variables (NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY, etc.).
+
+Backend/Edge functions (optional): If you choose to run server routes or edge functions separately, deploy them as a Render Web Service with the appropriate environment variables and secrets.
+
+DNS configuration – Add your custom domain (meauxbility.com and www.meauxbility.com) in Render. Render will provide A and CNAME records; update these at your domain registrar (e.g., Wix, GoDaddy, Namecheap) and remove old Wix records.
+
+Configure emails – Generate a Gmail app password, set GMAIL_USER and GMAIL_APP_PASSWORD in Supabase secrets or Render environment variables. Remember that Gmail imposes daily sending limits (500 emails/day for personal Gmail, 2,000 for Google Workspace)
+trulyinbox.com
+.
+
+Configure Stripe and other APIs – Add your Stripe keys, Google OAuth credentials, GA4 measurement ID and any AI integration keys to Render’s environment variables.
+
+Test and launch – Validate the application locally (npm run build), then deploy to Render. Verify that all pages load, donations process correctly, emails send via Gmail, cron jobs run and analytics events are recorded.
+
+4. Removal of Shopify
+
+Shopify was previously used for the e‑commerce portion of the platform. With the migration to Render and the removal of Shopify, all product management and order processing occur directly within Supabase and Stripe. Remove the following:
+
+Environment variables related to Shopify (e.g., SHOPIFY_API_KEY, SHOPIFY_STOREFRONT_TOKEN).
+
+Any API calls to Shopify in the frontend code. Replace product queries with Supabase queries and handle carts/orders through your own database tables and Stripe checkout sessions.
+
+5. Email Considerations (Gmail vs. dedicated services)
+
+Gmail is adequate for low‑volume transactional email. Personal accounts are limited to 500 emails per day while Google Workspace accounts allow 2,000 emails per day
+trulyinbox.com
+. Services like SendGrid or Mailchimp provide higher send volumes and analytics; however, for small nonprofits sending ~1,000 emails/month, Gmail via SMTP is sufficient
+serverfault.com
+. Should email volume increase, consider migrating to a dedicated email API for better deliverability and analytics.
+
+6. AI Integration Overview (Optional)
+
+The ai-integrations package contains scripts to integrate Anthropic Claude, OpenAI ChatGPT and Team ChatGPT with Supabase. These workflows automate:
+
+Donation thank‑you emails – generating personalized messages.
+
+Volunteer application scoring – ranking volunteer applications based on criteria.
+
+Content generation – creating social media posts, blog content and marketing copy.
+
+Meeting summaries and task assignments – summarizing meeting notes and distributing tasks.
+
+To enable these, obtain API keys from Anthropic and OpenAI, set them in your .env, run the setup script (npm run setup in ai-integrations), then test each workflow. Use Render’s cron jobs or Supabase edge functions to schedule automation.
+
+
 # 🚀 MEAUXBILITY SUPABASE SCHEMA
 ## Complete Database Infrastructure for Nonprofit Platform
 
