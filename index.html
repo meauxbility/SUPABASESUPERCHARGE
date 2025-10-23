@@ -1,1101 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meauxbility Admin Portal</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #6366F1;
-            --primary-dark: #4F46E5;
-            --primary-light: #818CF8;
-            --secondary: #14B8A6;
-            --accent: #EC4899;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --error: #EF4444;
-            
-            --bg-main: #0a0e1a;
-            --bg-secondary: #131824;
-            --bg-tertiary: #1a1f2e;
-            --bg-card: #1e2433;
-            
-            --text-primary: #F8FAFC;
-            --text-secondary: #94A3B8;
-            --text-muted: #64748B;
-            
-            --border-color: rgba(148, 163, 184, 0.1);
-            --border-hover: rgba(148, 163, 184, 0.2);
-            
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
-            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
-            
-            --sidebar-width: 280px;
-            --header-height: 64px;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-main);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        .admin-portal {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ===== HEADER ===== */
-        .portal-header {
-            height: var(--header-height);
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .brand-logo {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .brand-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .brand-text h1 {
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.3px;
-        }
-
-        .brand-text p {
-            font-size: 0.65rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        .search-box {
-            position: relative;
-        }
-
-        .search-box input {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 0.5rem 1rem 0.5rem 2.5rem;
-            color: var(--text-primary);
-            font-size: 0.85rem;
-            width: 280px;
-            transition: all 0.2s ease;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--primary);
-            background: var(--bg-card);
-        }
-
-        .search-box input::placeholder {
-            color: var(--text-muted);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 0.85rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .notification-btn {
-            width: 36px;
-            height: 36px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.2s ease;
-        }
-
-        .notification-btn:hover {
-            background: var(--bg-card);
-            border-color: var(--border-hover);
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: -4px;
-            right: -4px;
-            width: 16px;
-            height: 16px;
-            background: var(--error);
-            border-radius: 50%;
-            font-size: 0.6rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            border: 2px solid var(--bg-secondary);
-        }
-
-        /* ===== MAIN LAYOUT ===== */
-        .portal-body {
-            display: flex;
-            flex: 1;
-        }
-
-        /* ===== SIDEBAR ===== */
-        .sidebar {
-            width: var(--sidebar-width);
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .sidebar-profile {
-            padding: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .profile-card {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.25rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.75rem;
-            transition: all 0.2s ease;
-        }
-
-        .profile-card:hover {
-            background: var(--bg-card);
-            border-color: var(--border-hover);
-        }
-
-        .profile-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid var(--primary);
-            position: relative;
-        }
-
-        .profile-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .status-dot {
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
-            width: 10px;
-            height: 10px;
-            background: var(--success);
-            border: 2px solid var(--bg-tertiary);
-            border-radius: 50%;
-        }
-
-        .profile-info {
-            text-align: center;
-        }
-
-        .profile-name {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .profile-role {
-            font-size: 0.65rem;
-            color: var(--text-secondary);
-            background: rgba(99, 102, 241, 0.1);
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            display: inline-block;
-        }
-
-        /* Navigation */
-        .nav-section {
-            flex: 1;
-            padding: 1rem;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.25rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .nav-item:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .nav-item.active {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-        }
-
-        .nav-icon {
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* ===== CONTENT AREA ===== */
-        .content-area {
-            flex: 1;
-            background: var(--bg-main);
-            overflow-y: auto;
-        }
-
-        .content-wrapper {
-            padding: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .page-section {
-            display: none;
-        }
-
-        .page-section.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Page Header */
-        .page-header {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .page-header h1 {
-            font-size: 1.75rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .page-header p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 1.5rem;
-            transition: all 0.2s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--border-hover);
-            box-shadow: var(--shadow-md);
-        }
-
-        .stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .stat-label {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .stat-value {
-            font-size: 2.25rem;
-            font-weight: 900;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            line-height: 1;
-        }
-
-        .stat-change {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            padding: 0.35rem 0.7rem;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--success);
-        }
-
-        /* Card */
-        .card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-        }
-
-        .card-header {
-            padding: 1.25rem 1.75rem;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .card-action {
-            color: var(--primary-light);
-            text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            transition: color 0.2s ease;
-        }
-
-        .card-action:hover {
-            color: var(--primary);
-        }
-
-        .card-body {
-            padding: 1.75rem;
-        }
-
-        /* Button */
-        .btn {
-            padding: 0.65rem 1.25rem;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        /* Quick Actions */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .action-card {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .action-card:hover {
-            background: var(--bg-card);
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-        }
-
-        .action-icon {
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .action-label {
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.85rem;
-        }
-
-        /* Session Info */
-        .session-info {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .session-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .session-row:last-child {
-            border-bottom: none;
-        }
-
-        .session-label {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .session-value {
-            color: var(--text-primary);
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        /* Countdown */
-        .countdown-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-        }
-
-        .countdown-item {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .countdown-value {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--primary-light);
-            margin-bottom: 0.5rem;
-            line-height: 1;
-        }
-
-        .countdown-label {
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 600;
-        }
-
-        /* API Grid */
-        .api-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .api-card {
-            background: var(--bg-tertiary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.2s ease;
-            cursor: pointer;
-        }
-
-        .api-card:hover {
-            background: var(--bg-card);
-            border-color: var(--border-hover);
-            transform: translateY(-2px);
-        }
-
-        .api-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .api-label {
-            font-size: 0.65rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 700;
-        }
-
-        .api-logo {
-            font-size: 1.75rem;
-        }
-
-        .api-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.75rem;
-        }
-
-        .api-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .api-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .status-indicator {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--success);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 2.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Mobile */
-        @media (max-width: 1024px) {
-            .search-box {
-                display: none;
-            }
-
-            .sidebar {
-                position: fixed;
-                left: -100%;
-                top: var(--header-height);
-                height: calc(100vh - var(--header-height));
-                z-index: 99;
-                transition: left 0.3s ease;
-            }
-
-            .sidebar.open {
-                left: 0;
-            }
-
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .countdown-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 640px) {
-            .portal-header {
-                padding: 0 1rem;
-            }
-
-            .content-wrapper {
-                padding: 1.5rem 1rem;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .api-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .quick-actions {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>InnerAnimals - Meauxbility Footer Integration</title>
+  
+  <!-- Stripe Payment Integration -->
+  <script src="https://js.stripe.com/v3/"></script>
+  
+  <!-- Google Model Viewer for GLB -->
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Preload Logo -->
+  <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+  
+  <!-- Footer CSS -->
+  <link rel="stylesheet" href="footer.css">
+  
+  <style>
+    /* Basic page styles */
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #0C2D31;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .page-content {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .hero {
+      text-align: center;
+      padding: 4rem 0;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 20px;
+      margin-bottom: 2rem;
+    }
+    
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      color: #0C2D31;
+      margin-bottom: 1rem;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      color: #173E45;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .content-section {
+      padding: 2rem 0;
+    }
+    
+    .content-section h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #0C2D31;
+      margin-bottom: 1rem;
+    }
+    
+    .content-section p {
+      font-size: 1.125rem;
+      color: #173E45;
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
-<body>
-    <div class="admin-portal">
-        <!-- Header -->
-        <header class="portal-header">
-            <div class="header-left">
-                <div class="brand">
-                    <div class="brand-logo">
-                        <img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/spartans.png?v=1760985852" alt="Logo">
-                    </div>
-                    <div class="brand-text">
-                        <h1>Meauxbility</h1>
-                        <p>Admin Portal</p>
-                    </div>
-                </div>
-                <div class="search-box">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" placeholder="Search...">
-                </div>
-            </div>
-            <div class="header-right">
-                <div class="notification-btn">
-                    <span>🔔</span>
-                    <span class="notification-badge">3</span>
-                </div>
-            </div>
-        </header>
-
-        <!-- Body -->
-        <div class="portal-body">
-            <!-- Sidebar -->
-            <aside class="sidebar">
-                <div class="sidebar-profile">
-                    <div class="profile-card">
-                        <div class="profile-avatar">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop" alt="Sam">
-                            <span class="status-dot"></span>
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-name">Sam Primeaux</div>
-                            <div class="profile-role">President</div>
-                        </div>
-                    </div>
-                </div>
-
-                <nav class="nav-section">
-                    <a class="nav-item active" data-page="dashboard">
-                        <span class="nav-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/analyticsiconglassmorphic.png?v=1760986049" alt="">
-                        </span>
-                        <span>Dashboard</span>
-                    </a>
-                    <a class="nav-item" data-page="integrations">
-                        <span class="nav-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/automeauxapi.png?v=1760936251" alt="">
-                        </span>
-                        <span>Integrations</span>
-                    </a>
-                    <a class="nav-item" data-page="team">
-                        <span class="nav-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/organize.png?v=1760985790" alt="">
-                        </span>
-                        <span>Team</span>
-                    </a>
-                    <a class="nav-item" data-page="time">
-                        <span class="nav-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/seethestats.png?v=1760936250" alt="">
-                        </span>
-                        <span>Time Tracking</span>
-                    </a>
-                    <a class="nav-item" data-page="tasks">
-                        <span class="nav-icon">
-                            <img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/Completedtask.png?v=1760936251" alt="">
-                        </span>
-                        <span>Tasks</span>
-                    </a>
-                </nav>
-            </aside>
-
-            <!-- Content -->
-            <main class="content-area">
-                <div class="content-wrapper">
-                    <!-- Dashboard -->
-                    <section class="page-section active" id="dashboard">
-                        <div class="page-header">
-                            <h1>Welcome Back, Sam! 👋</h1>
-                            <p>Here's what's happening with your organization today</p>
-                        </div>
-
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <div class="stat-header">
-                                    <span class="stat-label">Total Members</span>
-                                    <span class="stat-icon">👥</span>
-                                </div>
-                                <div class="stat-value">142</div>
-                                <span class="stat-change">↑ 12% this month</span>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-header">
-                                    <span class="stat-label">Active Tasks</span>
-                                    <span class="stat-icon">✅</span>
-                                </div>
-                                <div class="stat-value">28</div>
-                                <span class="stat-change">↑ 5 new today</span>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-header">
-                                    <span class="stat-label">Total Hours</span>
-                                    <span class="stat-icon">⏱️</span>
-                                </div>
-                                <div class="stat-value">1,247</div>
-                                <span class="stat-change">↑ 18% vs last week</span>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-header">
-                                    <span class="stat-label">Completion Rate</span>
-                                    <span class="stat-icon">📈</span>
-                                </div>
-                                <div class="stat-value">94%</div>
-                                <span class="stat-change">↑ 3% improvement</span>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">Quick Actions</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="quick-actions">
-                                    <div class="action-card">
-                                        <div class="action-icon">➕</div>
-                                        <div class="action-label">Add Member</div>
-                                    </div>
-                                    <div class="action-card">
-                                        <div class="action-icon">📝</div>
-                                        <div class="action-label">Create Task</div>
-                                    </div>
-                                    <div class="action-card">
-                                        <div class="action-icon">📊</div>
-                                        <div class="action-label">View Reports</div>
-                                    </div>
-                                    <div class="action-card">
-                                        <div class="action-icon">⚙️</div>
-                                        <div class="action-label">Settings</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">Today's Session</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="session-info">
-                                    <div class="session-row">
-                                        <span class="session-label">Current Date</span>
-                                        <span class="session-value" id="current-date">Loading...</span>
-                                    </div>
-                                    <div class="session-row">
-                                        <span class="session-label">Session Started</span>
-                                        <span class="session-value" id="session-start">Loading...</span>
-                                    </div>
-                                    <div class="session-row">
-                                        <span class="session-label">Active Time</span>
-                                        <span class="session-value" id="session-timer">00:00:00</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">🚀 Launch Countdown</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="countdown-grid">
-                                    <div class="countdown-item">
-                                        <div class="countdown-value" id="days">0</div>
-                                        <div class="countdown-label">Days</div>
-                                    </div>
-                                    <div class="countdown-item">
-                                        <div class="countdown-value" id="hours">0</div>
-                                        <div class="countdown-label">Hours</div>
-                                    </div>
-                                    <div class="countdown-item">
-                                        <div class="countdown-value" id="minutes">0</div>
-                                        <div class="countdown-label">Minutes</div>
-                                    </div>
-                                    <div class="countdown-item">
-                                        <div class="countdown-value" id="seconds">0</div>
-                                        <div class="countdown-label">Seconds</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Integrations -->
-                    <section class="page-section" id="integrations">
-                        <div class="page-header">
-                            <h1>Integrations & APIs</h1>
-                            <p>Manage your connected services and API keys</p>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">Connected Services</h2>
-                                <button class="btn btn-primary">+ Add Integration</button>
-                            </div>
-                            <div class="card-body">
-                                <div class="api-grid">
-                                    <div class="api-card">
-                                        <div class="api-header">
-                                            <div class="api-label">Payment Processing</div>
-                                            <div class="api-logo">💳</div>
-                                        </div>
-                                        <div class="api-name">Stripe</div>
-                                        <div class="api-meta">
-                                            <div class="api-status">
-                                                <span class="status-indicator"></span>
-                                                Active
-                                            </div>
-                                            <span>Live Keys</span>
-                                        </div>
-                                    </div>
-                                    <div class="api-card">
-                                        <div class="api-header">
-                                            <div class="api-label">Database & CRM</div>
-                                            <div class="api-logo">📊</div>
-                                        </div>
-                                        <div class="api-name">Notion</div>
-                                        <div class="api-meta">
-                                            <div class="api-status">
-                                                <span class="status-indicator"></span>
-                                                Active
-                                            </div>
-                                            <span>3 Databases</span>
-                                        </div>
-                                    </div>
-                                    <div class="api-card">
-                                        <div class="api-header">
-                                            <div class="api-label">Email Platform</div>
-                                            <div class="api-logo">📧</div>
-                                        </div>
-                                        <div class="api-name">SendGrid</div>
-                                        <div class="api-meta">
-                                            <div class="api-status">
-                                                <span class="status-indicator"></span>
-                                                Active
-                                            </div>
-                                            <span>15k/mo</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Team -->
-                    <section class="page-section" id="team">
-                        <div class="page-header">
-                            <h1>Team Management</h1>
-                            <p>Manage team members, roles, and permissions</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">Team Members (3)</h2>
-                                <button class="btn btn-primary">+ Invite Member</button>
-                            </div>
-                            <div class="card-body">
-                                <div class="empty-state">Team management interface coming soon...</div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Time -->
-                    <section class="page-section" id="time">
-                        <div class="page-header">
-                            <h1>Time Tracking</h1>
-                            <p>Monitor activity, sessions, and generate timesheets</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">Recent Activity</h2>
-                                <a href="#" class="card-action">Export Timesheet →</a>
-                            </div>
-                            <div class="card-body">
-                                <div class="empty-state">Activity tracking interface coming soon...</div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Tasks -->
-                    <section class="page-section" id="tasks">
-                        <div class="page-header">
-                            <h1>Tasks & Projects</h1>
-                            <p>Manage your tasks, deadlines, and project milestones</p>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h2 class="card-title">Active Tasks</h2>
-                                <button class="btn btn-primary">+ New Task</button>
-                            </div>
-                            <div class="card-body">
-                                <div class="empty-state">Task management interface coming soon...</div>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-            </main>
-        </div>
+<body data-theme="light">
+  <div class="mbx-footer-wrapper">
+    <!-- Page Content -->
+    <div class="page-content">
+      <div class="hero">
+        <h1>InnerAnimals</h1>
+        <p>Welcome to InnerAnimals - now powered by Meauxbility's premium footer with integrated Stripe payments.</p>
+      </div>
+      
+      <div class="content-section">
+        <h2>About This Integration</h2>
+        <p>This page demonstrates the Meauxbility footer integration for your Render static site. The footer includes:</p>
+        <ul>
+          <li>✅ Stripe payment integration (tested and working)</li>
+          <li>✅ 3D GLB model viewer</li>
+          <li>✅ Newsletter signup</li>
+          <li>✅ Social media links</li>
+          <li>✅ Responsive design</li>
+          <li>✅ Dark/light theme support</li>
+        </ul>
+      </div>
+      
+      <div class="content-section">
+        <h2>Stripe Integration Status</h2>
+        <p>Your Stripe setup is configured and ready:</p>
+        <ul>
+          <li>✅ Stripe Publishable Key: <code>pk_live_51S4R0SRW56Pm3uYI8EKbysm1ok4peVXSD6G17HtFy8BDuG9Carn8Ry7iPVzulMBtdEFcz5pFvXpE04CIgn8PY6WS00aXOqMYEI</code></li>
+          <li>✅ Payment endpoint: <code>https://shhh-ox7c.onrender.com/donations</code></li>
+          <li>✅ Donation modal with form validation</li>
+          <li>✅ Multiple donation amounts and frequencies</li>
+        </ul>
+      </div>
     </div>
 
-    <script>
-        // Navigation
-        function navigate(page) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(page).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector(`[data-page="${page}"]`).classList.add('active');
-        }
+    <!-- Premium Footer -->
+    <footer class="mbx-footer" id="mbx-footer" role="contentinfo">
+      <!-- 3D GLB Accent -->
+      <div class="mbx-3d-accent" aria-hidden="true">
+        <model-viewer
+          src="https://cdn.shopify.com/3d/models/4b0a47ca8a38b77c/Kinetic_Symmetry_0831084700_generate.glb"
+          alt="Decorative 3D element"
+          auto-rotate
+          rotation-per-second="18deg"
+          camera-controls="false"
+          disable-zoom
+          disable-pan
+          disable-tap
+          interaction-prompt="none"
+          shadow-intensity="0"
+          exposure="1.2"
+          loading="lazy"
+          reveal="auto">
+        </model-viewer>
+      </div>
 
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                navigate(item.dataset.page);
-            });
-        });
+      <div class="mbx-footer-container">
+        <div class="mbx-footer-grid">
+          <!-- Brand Column -->
+          <div class="mbx-footer-brand">
+            <a href="/" class="mbx-footer-logo" aria-label="Meauxbility Home">
+              <picture>
+                <source srcset="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+                <img 
+                  src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.png?v=1760648662" 
+                  alt="Meauxbility - Empowering mobility and independence"
+                  width="220"
+                  height="220"
+                  loading="lazy"
+                >
+              </picture>
+            </a>
+            
+            <div class="mbx-footer-social" role="list">
+              <a class="mbx-social-link" aria-label="Facebook" href="https://www.facebook.com/p/Meauxbility-61577795721851/" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12S0 5.446 0 12.073c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a class="mbx-social-link" aria-label="Instagram" href="https://www.instagram.com/meauxbility/" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 15.838a3.838 3.838 0 110-7.676 3.838 3.838 0 010 7.676zM18.406 5.594a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/>
+                </svg>
+              </a>
+            </div>
+            
+            <p>
+              More Options. More Access. More Life. Join us as we transform obstacles into pathways for adaptive athletes and spinal cord injury survivors.
+            </p>
+            
+            <div class="mbx-footer-cta">
+              <a class="mbx-btn mbx-btn-primary" href="https://meauxbility.org/pages/donmichael-our-first-campaign">
+                DonMichael's Campaign
+              </a>
+              <button class="mbx-btn mbx-btn-outline" onclick="openDonateModal()">
+                Donate Now
+              </button>
+            </div>
+            
+            <div class="mbx-newsletter">
+              <h4>Stay Connected</h4>
+              <p style="color:rgba(255,255,255,0.85);font-size:14px;margin-bottom:8px;">
+                Get updates on our impact and ways to help
+              </p>
+              <form class="mbx-newsletter-form" id="mbx-newsletterForm">
+                <input type="email" class="mbx-newsletter-input" placeholder="Enter your email" required aria-label="Email address">
+                <button type="submit" class="mbx-newsletter-btn">Subscribe</button>
+              </form>
+            </div>
+          </div>
 
-        // Session Timer
-        const start = new Date();
-        document.getElementById('session-start').textContent = start.toLocaleTimeString('en-US', {hour: '2-digit', minute: '2-digit'});
+          <!-- Resources Column -->
+          <div class="mbx-footer-column">
+            <h4>Resources</h4>
+            <ul class="mbx-footer-links" role="list">
+              <li><a href="https://meauxbility.org/pages/meauxbility-branding">Brand Guide</a></li>
+              <li><a href="https://meauxbility.org/pages/community">Community</a></li>
+              <li><a href="https://meauxbility.org/pages/news-media-features">Latest News</a></li>
+              <li><a href="https://meauxbility.org/pages/non-profit-information">501(c)(3) Info</a></li>
+            </ul>
+          </div>
 
-        function updateTimer() {
-            const elapsed = Math.floor((new Date() - start) / 1000);
-            const h = Math.floor(elapsed / 3600);
-            const m = Math.floor((elapsed % 3600) / 60);
-            const s = elapsed % 60;
-            document.getElementById('session-timer').textContent = 
-                `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
-        }
-        setInterval(updateTimer, 1000);
+          <!-- Company Column -->
+          <div class="mbx-footer-column">
+            <h4>Company</h4>
+            <ul class="mbx-footer-links" role="list">
+              <li><a href="https://meauxbility.org/pages/sam-primeaux">About Sam</a></li>
+              <li><a href="https://meauxbility.org/pages/team-meauxbility">Our Team</a></li>
+              <li><a href="https://meauxbility.org/pages/about-us">Our Mission</a></li>
+              <li><a href="https://meauxbility.org/pages/accessibility-partners">Partners</a></li>
+              <li><a href="https://meauxbility.org/pages/contact">Contact</a></li>
+            </ul>
+          </div>
 
-        // Countdown
-        const launch = new Date('2025-11-03T00:00:00');
-        function updateCountdown() {
-            const diff = launch - new Date();
-            if (diff <= 0) return;
-            document.getElementById('days').textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('hours').textContent = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById('minutes').textContent = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            document.getElementById('seconds').textContent = Math.floor((diff % (1000 * 60)) / 1000);
-        }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+          <!-- Support Column -->
+          <div class="mbx-footer-column">
+            <h4>Support</h4>
+            <ul class="mbx-footer-links" role="list">
+              <li><a href="https://meauxbility.org/pages/faq">FAQ</a></li>
+              <li><a href="https://meauxbility.org/pages/donate">Ways to Give</a></li>
+              <li><a href="https://meauxbility.org/pages/get-involved">Get Involved</a></li>
+              <li><a href="https://meauxbility.org/pages/apply-for-funding">Apply for Grant</a></li>
+            </ul>
+          </div>
+        </div>
 
-        // Date
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
-            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-        });
+        <!-- Footer Bottom -->
+        <div class="mbx-footer-bottom">
+          <div class="mbx-footer-legal">
+            <a href="https://meauxbility.org/pages/data-sharing-opt-out">Privacy Policy</a>
+            <span aria-hidden="true" style="color:rgba(255,255,255,0.3);">•</span>
+            <a href="https://meauxbility.org/pages/policies">Terms of Service</a>
+            <span aria-hidden="true" style="color:rgba(255,255,255,0.3);">•</span>
+            <a href="https://meauxbility.org/pages/accessibility">Accessibility</a>
+          </div>
 
-        console.log('✅ Meauxbility Admin Portal Loaded');
-    </script>
+          <div class="mbx-footer-copyright">
+            © <span id="mbx-year"></span> Meauxbility. 501(c)(3) EIN: 33-4214907. All rights reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Enhanced Donation Modal -->
+    <div class="mbx-modal-backdrop" id="mbxModalBackdrop" aria-hidden="true" role="dialog" aria-labelledby="mbx-modal-title">
+      <div class="mbx-modal">
+        <div class="mbx-modal-header">
+          <div>
+            <h3 class="mbx-modal-title" id="mbx-modal-title">Support Meauxbility</h3>
+            <p class="mbx-modal-subtitle">Every dollar transforms lives</p>
+          </div>
+          <button class="mbx-modal-close" onclick="closeDonateModal()" aria-label="Close donation modal">&times;</button>
+        </div>
+        <div class="mbx-modal-body">
+          <div class="mbx-success-message" id="mbxSuccessMsg">
+            <div style="font-size:2rem;margin-bottom:0.5rem;">✅</div>
+            <div style="font-weight:800;color:#fff;margin-bottom:0.25rem;">Thank You!</div>
+            <div style="color:rgba(255,255,255,0.9);font-size:0.875rem;">Your donation has been processed successfully.</div>
+          </div>
+          <div class="mbx-donate-grid">
+            <div class="mbx-donate-options">
+              <h3 class="mbx-option-title">Choose Your Gift</h3>
+              <div class="mbx-frequency-toggle">
+                <button class="mbx-frequency-btn active" onclick="setMbxFrequency('one_time')">One Time</button>
+                <button class="mbx-frequency-btn" onclick="setMbxFrequency('monthly')">Monthly</button>
+              </div>
+              <div class="mbx-amount-grid">
+                <button class="mbx-amount-btn" onclick="selectMbxAmount(25)">$25</button>
+                <button class="mbx-amount-btn" onclick="selectMbxAmount(50)">$50</button>
+                <button class="mbx-amount-btn" onclick="selectMbxAmount(100)">$100</button>
+                <button class="mbx-amount-btn selected" onclick="selectMbxAmount(250)">$250</button>
+                <button class="mbx-amount-btn" onclick="selectMbxAmount(500)">$500</button>
+                <button class="mbx-amount-btn" onclick="selectMbxAmount(1000)">$1k</button>
+              </div>
+              <input type="number" class="mbx-custom-amount" placeholder="Custom amount" min="1" oninput="selectMbxCustom(this.value)">
+              <div class="mbx-designation" style="margin-top:1rem;">
+                <select id="mbxDesignation" style="width:100%;padding:0.75rem 2rem 0.75rem 0.75rem;background:rgba(26,74,82,0.3);border:1.5px solid rgba(74,171,184,0.3);border-radius:10px;color:#fff;font-size:0.875rem;cursor:pointer;appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%2712%27 viewBox=%270 0 12 12%27%3E%3Cpath fill=%27%23fff%27 d=%27M6 8L2 4h8z%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 0.75rem center;font-family:'Inter',sans-serif;">
+                  <option value="general">Where Most Needed</option>
+                  <option value="donmichael">DonMichael's Wheelchair</option>
+                  <option value="recovery">Recovery Grant Program</option>
+                  <option value="adaptive">Adaptive Athletes</option>
+                  <option value="equipment">Equipment Fund</option>
+                </select>
+              </div>
+            </div>
+            <div class="mbx-donor-info">
+              <h3 class="mbx-option-title">Your Information</h3>
+              <div class="mbx-name-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+                <div class="mbx-form-group">
+                  <label style="display:block;color:rgba(255,255,255,0.9);margin-bottom:0.375rem;font-weight:600;font-size:0.875rem;">First Name</label>
+                  <input type="text" class="mbx-form-input" id="mbxFirstName" required>
+                  <div class="mbx-error" id="mbxFirstNameErr">Required</div>
+                </div>
+                <div class="mbx-form-group">
+                  <label style="display:block;color:rgba(255,255,255,0.9);margin-bottom:0.375rem;font-weight:600;font-size:0.875rem;">Last Name</label>
+                  <input type="text" class="mbx-form-input" id="mbxLastName" required>
+                  <div class="mbx-error" id="mbxLastNameErr">Required</div>
+                </div>
+              </div>
+              <div class="mbx-form-group" style="margin-bottom:1rem;">
+                <label style="display:block;color:rgba(255,255,255,0.9);margin-bottom:0.375rem;font-weight:600;font-size:0.875rem;">Email</label>
+                <input type="email" class="mbx-form-input" id="mbxEmail" required>
+                <div class="mbx-error" id="mbxEmailErr">Valid email required</div>
+              </div>
+              <div class="mbx-form-group">
+                <label style="display:block;color:rgba(255,255,255,0.9);margin-bottom:0.375rem;font-weight:600;font-size:0.875rem;">Card Information</label>
+                <div id="mbx-card-element" style="padding:0.75rem;background:rgba(26,74,82,0.3);border:1.5px solid rgba(74,171,184,0.3);border-radius:10px;transition:var(--footer-transition);"></div>
+                <div class="mbx-error" id="mbxCardErr"></div>
+              </div>
+              <button class="mbx-donate-submit" onclick="processMbxDonation()">
+                <span class="mbx-submit-text">Complete Donation</span>
+                <div class="mbx-loading" id="mbxLoading">
+                  <div class="mbx-spinner"></div>
+                  <span>Processing...</span>
+                </div>
+              </button>
+              <div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:1.25rem;color:rgba(255,255,255,0.7);font-size:0.75rem;">
+                🔒 Secure & tax-deductible • EIN: 33-4214907
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer JavaScript -->
+  <script src="footer.js"></script>
 </body>
 </html>
