@@ -279,6 +279,7 @@ export default function HomePage() {
               <img src="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/sam-smile-pikes-peak.jpg?v=1754025762" alt="Sam Primeaux at Pikes Peak" loading="eager" />
             </div>
             <h1 className="meauxxxHeadingXL meauxxxHeroTitle">Built by a survivor for survivors.</h1>
+            {/* Live deployment test - updated */}
             <p className="meauxxxTextLead meauxxxHeroDescription">
               We connect people with <span className="meauxxxTextHighlight">spinal cord injuries</span> to the
               <span className="meauxxxTextHighlight"> treatments</span>, 
