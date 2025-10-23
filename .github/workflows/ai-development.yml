@@ -1,0 +1,164 @@
+name: 🤖 AI-Powered Development
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      ai_command:
+        description: 'AI Command to run'
+        required: true
+        default: 'analyze'
+      target_file:
+        description: 'Target file for AI analysis'
+        required: false
+        default: 'apps/dashboard-render/pages/index.tsx'
+
+jobs:
+  ai-analysis:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    
+    steps:
+    - name: 🚀 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: 🔧 Install dependencies
+      run: |
+        cd ai-agents
+        npm install
+        
+    - name: 🧠 AI Code Analysis
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        AI_AGENT_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        cd ai-agents
+        echo "🤖 Running AI analysis on changed files..."
+        
+        # Get list of changed files
+        CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep -E '\.(ts|tsx|js|jsx)$' || echo "")
+        
+        if [ -n "$CHANGED_FILES" ]; then
+          for file in $CHANGED_FILES; do
+            echo "🔍 Analyzing $file..."
+            node claude-supercharge.js analyze "$file" > "analysis-$file.txt"
+          done
+        else
+          echo "📝 No TypeScript/JavaScript files changed"
+        fi
+        
+    - name: 📊 AI Performance Optimization
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: |
+        cd ai-agents
+        echo "⚡ Running performance optimization analysis..."
+        
+        # Analyze main pages for optimization opportunities
+        node claude-supercharge.js optimize "apps/dashboard-render/pages/index.tsx" > "optimization-index.txt"
+        node claude-supercharge.js optimize "apps/dashboard-render/pages/admin.tsx" > "optimization-admin.txt"
+        
+    - name: 🧪 AI Test Generation
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: |
+        cd ai-agents
+        echo "🧪 Generating AI-powered tests..."
+        
+        # Generate tests for main components
+        node claude-supercharge.js test "apps/dashboard-render/pages/index.tsx" "unit" > "tests-index.txt"
+        node claude-supercharge.js test "apps/dashboard-render/pages/admin.tsx" "integration" > "tests-admin.txt"
+        
+    - name: 📋 Upload AI Analysis
+      uses: actions/upload-artifact@v4
+      with:
+        name: ai-analysis-results
+        path: |
+          ai-agents/analysis-*.txt
+          ai-agents/optimization-*.txt
+          ai-agents/tests-*.txt
+        retention-days: 30
+
+  ai-command:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - name: 🚀 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: 🔧 Install dependencies
+      run: |
+        cd ai-agents
+        npm install
+        
+    - name: 🤖 Run AI Command
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        AI_AGENT_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        cd ai-agents
+        echo "🤖 Running AI command: ${{ github.event.inputs.ai_command }}"
+        
+        if [ "${{ github.event.inputs.target_file }}" != "" ]; then
+          node claude-supercharge.js "${{ github.event.inputs.ai_command }}" "${{ github.event.inputs.target_file }}"
+        else
+          node claude-supercharge.js "${{ github.event.inputs.ai_command }}"
+        fi
+        
+    - name: 📋 Upload AI Results
+      uses: actions/upload-artifact@v4
+      with:
+        name: ai-command-results
+        path: ai-agents/
+        retention-days: 7
+
+  ai-deployment:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: 🚀 Checkout code
+      uses: actions/checkout@v4
+      
+    - name: 📦 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        
+    - name: 🔧 Install dependencies
+      run: |
+        cd ai-agents
+        npm install
+        
+    - name: 🚀 AI Deployment Assistance
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      run: |
+        cd ai-agents
+        echo "🚀 Running AI deployment analysis..."
+        node claude-supercharge.js deploy render > "deployment-analysis.txt"
+        
+    - name: 📋 Upload Deployment Analysis
+      uses: actions/upload-artifact@v4
+      with:
+        name: ai-deployment-analysis
+        path: ai-agents/deployment-analysis.txt
+        retention-days: 30

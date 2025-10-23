@@ -1,0 +1,46 @@
+{
+  "name": "meauxbility-ai-agents",
+  "version": "1.0.0",
+  "description": "AI-powered development agents for Meauxbility project",
+  "main": "claude-supercharge.js",
+  "bin": {
+    "claude": "./claude-supercharge.js",
+    "ai": "./claude-supercharge.js"
+  },
+  "scripts": {
+    "start": "node claude-supercharge.js",
+    "analyze": "node claude-supercharge.js analyze",
+    "generate": "node claude-supercharge.js generate",
+    "refactor": "node claude-supercharge.js refactor",
+    "debug": "node claude-supercharge.js debug",
+    "optimize": "node claude-supercharge.js optimize",
+    "test": "node claude-supercharge.js test",
+    "deploy": "node claude-supercharge.js deploy",
+    "migrate": "node claude-supercharge.js migrate",
+    "supabase": "node claude-supercharge.js supabase",
+    "status": "node claude-supercharge.js status",
+    "help": "node claude-supercharge.js help"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.24.3",
+    "dotenv": "^16.3.1",
+    "chalk": "^4.1.2",
+    "ora": "^5.4.1",
+    "inquirer": "^8.2.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": [
+    "ai",
+    "claude",
+    "anthropic",
+    "meauxbility",
+    "supabase",
+    "nextjs",
+    "development",
+    "automation"
+  ],
+  "author": "Meauxbility Team",
+  "license": "MIT"
+}
