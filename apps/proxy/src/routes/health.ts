@@ -19,7 +19,10 @@ export const healthCheck = async (req: Request, res: Response) => {
       }
     };
 
-    // Test Supabase connection
+    // Test Supabase connection Now I'll update the Supabase configuration with your new project credentials. Based on the information you provided:
+Project ID: ghiulqoqujsiofsjcrqk
+Anon Public Key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoaXVscW9xdWpzaW9mc2pjcnFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5NjAwOTAsImV4cCI6MjA3NjUzNjA5MH0.gJc7lCi9JMVhNAdon44Zuq5hT15EVM3Oyi-iszfJWSA
+API Key Publishable: sb_publishable_6Wx6omNR-X-J4ifSdVAo_w_fuRi1XDB 
     if (supabase) {
       try {
         const { data, error } = await supabase
