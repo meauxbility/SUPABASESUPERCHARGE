@@ -5,6 +5,432 @@
 **Created:** October 20, 2025  
 **Status:** ✅ Production Ready
 
+# 🌐 MEAUXBILITY.COM - Production Deployment Guide
+
+## 🎯 Goal: Move from Wix to Custom Stack
+
+**Timeline: 2-4 hours to live site**
+
+---
+
+## 📋 ARCHITECTURE OVERVIEW
+
+```
+meauxbility.com (Your Custom Site)
+    ↓
+┌─────────────────────────────────────────────────────┐
+│                    VERCEL                           │
+│  (Frontend Hosting - FREE)                          │
+│  - Next.js / React App                              │
+│  - Automatic deployments from GitHub                │
+│  - Custom domain: meauxbility.com                   │
+│  - SSL/HTTPS included                               │
+└─────────────────────────────────────────────────────┘
+         ↓                    ↓                  ↓
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│  SUPABASE    │    │   SHOPIFY    │    │   STRIPE     │
+│  (Backend)   │    │ (E-Commerce) │    │  (Payments)  │
+│  - Database  │    │  - Products  │    │ - Donations  │
+│  - Auth      │    │  - Orders    │    │ - Checkout   │
+│  - Storage   │    │  - Cart      │    └──────────────┘
+│  - API       │    └──────────────┘
+└──────────────┘
+```
+
+---
+
+## 🚀 PHASE 1: MOVE DOMAIN FROM WIX (30 minutes)
+
+### Step 1: Export Content from Wix (5 min)
+
+Before disconnecting, save what you need:
+
+1. **Export from Wix:**
+   - Log into Wix dashboard
+   - Go to **Settings** → **Business Info**
+   - Copy all text content, images, contact info
+   - Screenshot important pages
+   - Download any media files
+
+2. **What to save:**
+   - Logo
+   - Images
+   - Text content
+   - Contact information
+   - Any forms or emails
+
+### Step 2: Update DNS Settings (10 min)
+
+**Where is your domain registered?**
+- Check: https://whois.domaintools.com/meauxbility.com
+- Or log into Wix → Domains → meauxbility.com
+
+**If domain is registered with Wix:**
+1. Go to Wix dashboard
+2. Navigate to **Domains**
+3. Click on **meauxbility.com**
+4. Click **Transfer Domain** or **Change DNS**
+
+**If domain is registered elsewhere (GoDaddy, Namecheap, etc):**
+- Perfect! You just need to update DNS records
+
+### Step 3: Point Domain to Vercel (15 min)
+
+We'll do this after setting up Vercel in Phase 2.
+
+---
+
+## 🏗️ PHASE 2: SET UP FRONTEND (1 hour)
+
+### Option A: Create New Next.js Site (Recommended)
+
+```bash
+# 1. Create new Next.js app with TypeScript
+npx create-next-app@latest meauxbility-frontend --typescript --tailwind --app
+
+# 2. Navigate into project
+cd meauxbility-frontend
+
+# 3. Initialize git
+git init
+git add .
+git commit -m "Initial Next.js setup for meauxbility.com"
+
+# 4. Create GitHub repo
+# Go to: https://github.com/new
+# Name: meauxbility-frontend
+# Don't initialize with README (we already have code)
+
+# 5. Push to GitHub
+git remote add origin https://github.com/meauxbility/meauxbility-frontend.git
+git branch -M main
+git push -u origin main
+```
+
+### Option B: Use Existing Frontend Code
+
+If you already have a site built:
+
+```bash
+# Navigate to your frontend folder
+cd /path/to/your/frontend
+
+# Initialize git if not already
+git init
+git add .
+git commit -m "Prepare for Vercel deployment"
+
+# Push to GitHub
+git remote add origin https://github.com/meauxbility/meauxbility-frontend.git
+git push -u origin main
+```
+
+---
+
+## 🚀 PHASE 3: DEPLOY TO VERCEL (20 minutes)
+
+### Step 1: Sign Up & Connect GitHub (5 min)
+
+1. Go to: https://vercel.com/signup
+2. Click **Continue with GitHub**
+3. Authorize Vercel to access your repos
+
+### Step 2: Import Project (5 min)
+
+1. Click **Add New** → **Project**
+2. Find **meauxbility-frontend** repository
+3. Click **Import**
+4. Vercel will auto-detect Next.js settings
+5. Click **Deploy**
+6. Wait 2-3 minutes ⏱️
+
+**You'll get a URL like:** `meauxbility-frontend.vercel.app`
+
+### Step 3: Add Environment Variables (5 min)
+
+1. In Vercel dashboard → Your project → **Settings** → **Environment Variables**
+2. Add these from your `.env`:
+
+```bash
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=your-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-key
+
+# Stripe (public key only)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your-key
+
+# GA4
+NEXT_PUBLIC_GA4_MEASUREMENT_ID=your-id
+
+# Shopify (if using storefront API)
+NEXT_PUBLIC_SHOPIFY_DOMAIN=your-store.myshopify.com
+NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN=your-token
+```
+
+**Note:** Only add `NEXT_PUBLIC_` vars here. Server-side keys go elsewhere.
+
+### Step 4: Connect Custom Domain (5 min)
+
+1. In Vercel → Project → **Settings** → **Domains**
+2. Add domain: `meauxbility.com`
+3. Also add: `www.meauxbility.com`
+4. Vercel will show DNS records to add
+
+---
+
+## 🌐 PHASE 4: UPDATE DNS (15 minutes)
+
+### Get DNS Records from Vercel
+
+After adding domain, Vercel shows:
+
+```
+Type    Name    Value
+A       @       76.76.21.21
+CNAME   www     cname.vercel-dns.com
+```
+
+### Update DNS Records
+
+**Option A: Domain at Wix**
+
+1. Wix Dashboard → **Domains** → **meauxbility.com**
+2. Click **Advanced** → **Edit DNS Records**
+3. **Delete old A and CNAME records**
+4. **Add new records from Vercel:**
+   - Type: `A`, Name: `@`, Value: `76.76.21.21`
+   - Type: `CNAME`, Name: `www`, Value: `cname.vercel-dns.com`
+5. Save changes
+
+**Option B: Domain at GoDaddy/Namecheap/Other**
+
+1. Log into your domain registrar
+2. Find **DNS Management** or **DNS Settings**
+3. Delete old records pointing to Wix
+4. Add Vercel records (from above)
+5. Save
+
+### DNS Propagation
+
+- Takes 5 minutes to 48 hours (usually 5-30 min)
+- Check status: https://dnschecker.org/
+- Test: `dig meauxbility.com`
+
+---
+
+## 🎨 PHASE 5: BUILD YOUR FRONTEND (2-4 hours)
+
+### Quick Starter Template
+
+Let me create a basic structure:
+
+```bash
+meauxbility-frontend/
+├── app/
+│   ├── page.tsx              # Homepage
+│   ├── about/                # About page
+│   ├── donate/               # Donation page
+│   ├── contact/              # Contact page
+│   └── layout.tsx            # Main layout
+├── components/
+│   ├── Header.tsx            # Navigation
+│   ├── Footer.tsx            # Footer
+│   ├── DonateButton.tsx      # Stripe donation
+│   └── ContactForm.tsx       # Contact form
+├── lib/
+│   ├── supabase.ts          # Supabase client
+│   └── stripe.ts            # Stripe setup
+└── public/
+    ├── images/              # Your images
+    └── logo.svg             # Logo
+```
+
+### Connect to Supabase
+
+```typescript
+// lib/supabase.ts
+import { createClient } from '@supabase/supabase-js'
+
+export const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+)
+```
+
+### Connect to Stripe (Donations)
+
+```typescript
+// lib/stripe.ts
+import { loadStripe } from '@stripe/stripe-js'
+
+export const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+)
+```
+
+---
+
+## 🛒 PHASE 6: INTEGRATE SHOPIFY (Optional)
+
+### If you want products on meauxbility.com:
+
+1. **Shopify Storefront API:**
+   - Shopify Admin → **Apps** → **Develop apps**
+   - Create app with Storefront API access
+   - Get Storefront Access Token
+
+2. **Add Shopify Components:**
+   ```typescript
+   // components/Products.tsx
+   // Fetch products from Shopify
+   // Display with "Add to Cart" buttons
+   ```
+
+3. **Or Embed Shopify:**
+   - Use Shopify Buy Button
+   - Or iframe your Shopify store
+
+---
+
+## 📊 PHASE 7: ADD ANALYTICS & MONITORING
+
+### Google Analytics 4
+
+```typescript
+// app/layout.tsx
+import Script from 'next/script'
+
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <head>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID}');
+          `}
+        </Script>
+      </head>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+---
+
+## ✅ DEPLOYMENT CHECKLIST
+
+### Before Going Live:
+
+- [ ] Export all content from Wix
+- [ ] Frontend code in GitHub
+- [ ] Environment variables in Vercel
+- [ ] Test site at vercel.app URL
+- [ ] DNS records updated
+- [ ] Custom domain connected in Vercel
+- [ ] SSL certificate active (auto in Vercel)
+- [ ] Test all pages load correctly
+- [ ] Test donation form works
+- [ ] Test contact form works
+- [ ] Analytics tracking verified
+- [ ] Mobile responsive check
+- [ ] Cross-browser testing
+
+### After Going Live:
+
+- [ ] Announce on social media
+- [ ] Update email signatures
+- [ ] Update business cards
+- [ ] Monitor error logs in Vercel
+- [ ] Set up Vercel alerts
+- [ ] Cancel Wix subscription (after 30 days)
+
+---
+
+## 💰 COST BREAKDOWN
+
+### Current (Wix):
+- Wix Premium: ~$16-$35/month
+- Domain: Included or ~$15/year
+
+### New Stack (Custom):
+- **Vercel**: FREE (Hobby plan)
+- **Supabase**: FREE (up to 500MB)
+- **Domain**: ~$15/year (move to Cloudflare for $9/year)
+- **Shopify**: Your existing plan
+- **Total Hosting**: $0/month (vs $16-35/month) 💰
+
+**Savings: $192-420/year!**
+
+---
+
+## 🆘 TROUBLESHOOTING
+
+### "Domain not working after DNS update"
+- Wait 30 minutes
+- Clear browser cache
+- Check DNS propagation: https://dnschecker.org/
+
+### "SSL certificate error"
+- Vercel auto-provisions SSL
+- Wait 10-30 minutes after DNS propagation
+- If stuck, contact Vercel support (very responsive)
+
+### "Vercel deployment failed"
+- Check build logs in Vercel dashboard
+- Verify environment variables
+- Test build locally: `npm run build`
+
+### "Can't access Wix DNS settings"
+- Domain might be locked
+- Contact Wix support to unlock
+- Or wait until domain expires and transfer
+
+---
+
+## 🎯 QUICK START (Do This Now!)
+
+1. **Create Next.js site** (10 min)
+2. **Push to GitHub** (5 min)
+3. **Deploy to Vercel** (10 min)
+4. **Test at vercel.app URL** (5 min)
+5. **Add custom domain** (15 min)
+6. **Update DNS** (5 min, wait 30 min for propagation)
+
+**Total: 50 minutes active work, 30 minutes waiting**
+
+---
+
+## 📞 NEXT STEPS
+
+Want me to create:
+
+1. **Sample Next.js site** with Meauxbility branding?
+2. **Donation page component** with Stripe integration?
+3. **Contact form** that saves to Supabase?
+4. **GitHub Actions** for automatic deployments?
+5. **Complete starter template** ready to deploy?
+
+**Let's get meauxbility.com live on your custom stack!** 🚀
+
+---
+
+**Questions? Let me know what you want to build first!**
+
+
+
+
+
+
+
+
 ---
 
 ## 📋 QUICK START (30 Minutes)
@@ -1617,6 +2043,6 @@ If you can't find a key or have issues:
 4. **Phase 4** (Next week): GitHub CI/CD
 5. **Phase 5** (Next week): Shopify + Claude AI
 
----
+--- 
 
 **🔒 Remember: This file contains sensitive credentials. Protect it like your password!**
