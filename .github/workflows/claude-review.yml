@@ -1,4 +1,6 @@
 name: Claude AI Code Review
+# This workflow runs Claude AI code reviews on pull requests and pushes
+# Requires ANTHROPIC_API_KEY secret to be configured in repository settings
 on:
   pull_request:
     types: [opened, synchronize]
@@ -17,7 +19,24 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Check for Anthropic API Key
+        id: check-api-key
+        run: |
+          if [ -z "${{ secrets.ANTHROPIC_API_KEY }}" ]; then
+            echo "⚠️ ANTHROPIC_API_KEY secret is not configured"
+            echo "Please add your Anthropic API key to repository secrets:"
+            echo "1. Go to Settings → Secrets and variables → Actions"
+            echo "2. Click 'New repository secret'"
+            echo "3. Name: ANTHROPIC_API_KEY"
+            echo "4. Value: [Your Anthropic API key]"
+            echo "api_key_available=false" >> $GITHUB_OUTPUT
+          else
+            echo "✅ ANTHROPIC_API_KEY is configured"
+            echo "api_key_available=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Claude AI Review
+        if: steps.check-api-key.outputs.api_key_available == 'true'
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -31,3 +50,9 @@ jobs:
             6. Future-proofing for independent deployment
             
             Focus on the project standards defined in CLAUDE.md
+
+      - name: Skip Claude Review
+        if: steps.check-api-key.outputs.api_key_available == 'false'
+        run: |
+          echo "⏭️ Skipping Claude AI review - API key not configured"
+          echo "To enable Claude AI reviews, please add ANTHROPIC_API_KEY to repository secrets"
