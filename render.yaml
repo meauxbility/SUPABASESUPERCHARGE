@@ -41,6 +41,10 @@ services:
         sync: false
       - key: GITHUB_TOKEN
         sync: false
+      - key: SUPABASE_FUNCTION_ASSET_SIGNER_URL
+        sync: false
+      - key: NEXT_PUBLIC_ASSET_SIGNER_URL
+        sync: false
 
       # ---------- System variables ----------
       - key: NODE_ENV
