@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Meauxbility Admin Dashboard</title>
+    <style>
+      body { 
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; 
+        margin: 24px; 
+        background: #f8f9fa;
+      }
+      .row { 
+        display: flex; 
+        gap: 12px; 
+        align-items: center; 
+        margin: 8px 0; 
+      }
+      .card { 
+        border: 1px solid #ddd; 
+        border-radius: 8px; 
+        padding: 16px; 
+        margin: 12px 0; 
+        background: white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      input, select, button, textarea { 
+        padding: 8px 12px; 
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+      }
+      button {
+        background: #6366F1;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      button:hover {
+        background: #4F46E5;
+      }
+      pre { 
+        background: #f7f7f7; 
+        padding: 12px; 
+        border-radius: 8px; 
+        overflow: auto; 
+        font-size: 12px;
+      }
+      .loading {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .error {
+        color: #dc2626;
+        background: #fef2f2;
+        padding: 8px;
+        border-radius: 4px;
+        margin: 8px 0;
+      }
+      .success {
+        color: #059669;
+        background: #f0fdf4;
+        padding: 8px;
+        border-radius: 4px;
+        margin: 8px 0;
+      }
+    </style>
+    <script>
+      // Environment configuration - replace these with your actual values
+      window.SUPABASE_URL = window.SUPABASE_URL || 'https://ghiulqoqujsiofsjcrqk.supabase.co';
+      window.SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoaXVscW9xdWpzaW9mc2pjcnFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5NjAwOTAsImV4cCI6MjA3NjUzNjA5MH0.gJc7lCi9JMVhNAdon44Zuq5hT15EVM3Oyi-iszfJWSA';
+      
+      // Edge function paths
+      window.EDGE_ASSET_SIGNER = '/asset_signer';
+      window.EDGE_AGENT_GATEWAY = '/agent_gateway';
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

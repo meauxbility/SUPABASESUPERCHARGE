@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stripe Integration Test - Meauxbility</title>
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f9fa;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .test-container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+    .test-button {
+      background: #FF6B35;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      margin: 8px;
+    }
+    .test-button:hover {
+      background: #E85D00;
+    }
+    .status {
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+    .info { background: #d1ecf1; color: #0c5460; }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>🧪 Stripe Integration Test</h1>
+    <p>Testing Meauxbility's Stripe payment processing setup</p>
+    
+    <div id="status" class="status info">Initializing Stripe...</div>
+    
+    <div>
+      <button class="test-button" onclick="testStripeConnection()">Test Stripe Connection</button>
+      <button class="test-button" onclick="testCardElement()">Test Card Element</button>
+      <button class="test-button" onclick="testPaymentIntent()">Test Payment Intent</button>
+      <button class="test-button" onclick="testDonation()">Test Donation Flow</button>
+    </div>
+    
+    <div id="results"></div>
+  </div>
+
+  <script src="stripe-config.js"></script>
+  <script>
+    let stripe = null;
+    let elements = null;
+    let cardElement = null;
+
+    async function initializeStripe() {
+      try {
+        await window.MeauxbilityStripe.initialize();
+        stripe = window.MeauxbilityStripe.stripe;
+        elements = window.MeauxbilityStripe.elements;
+        
+        updateStatus('success', '✅ Stripe initialized successfully');
+        return true;
+      } catch (error) {
+        updateStatus('error', `❌ Stripe initialization failed: ${error.message}`);
+        return false;
+      }
+    }
+
+    function updateStatus(type, message) {
+      const status = document.getElementById('status');
+      status.className = `status ${type}`;
+      status.textContent = message;
+    }
+
+    function addResult(message, type = 'info') {
+      const results = document.getElementById('results');
+      const div = document.createElement('div');
+      div.className = `status ${type}`;
+      div.textContent = message;
+      results.appendChild(div);
+    }
+
+    async function testStripeConnection() {
+      addResult('🔍 Testing Stripe connection...', 'info');
+      
+      try {
+        if (!stripe) {
+          const initialized = await initializeStripe();
+          if (!initialized) return;
+        }
+        
+        // Test basic Stripe functionality
+        const testResult = await stripe.retrievePaymentIntent('pi_test_123');
+        
+        addResult('✅ Stripe connection successful', 'success');
+      } catch (error) {
+        if (error.code === 'resource_missing') {
+          addResult('✅ Stripe connection successful (test payment intent not found, but connection works)', 'success');
+        } else {
+          addResult(`❌ Stripe connection failed: ${error.message}`, 'error');
+        }
+      }
+    }
+
+    async function testCardElement() {
+      addResult('🔍 Testing card element creation...', 'info');
+      
+      try {
+        if (!elements) {
+          await initializeStripe();
+        }
+        
+        // Create a test card element
+        const testCard = elements.create('card', {
+          style: {
+            base: {
+              fontSize: '16px',
+              color: '#424770',
+              fontFamily: 'Inter, sans-serif'
+            }
+          }
+        });
+        
+        addResult('✅ Card element created successfully', 'success');
+      } catch (error) {
+        addResult(`❌ Card element creation failed: ${error.message}`, 'error');
+      }
+    }
+
+    async function testPaymentIntent() {
+      addResult('🔍 Testing payment intent creation...', 'info');
+      
+      try {
+        const response = await fetch('https://shhh-ox7c.onrender.com/donations', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Idempotency-Key': `test_${Date.now()}`
+          },
+          body: JSON.stringify({
+            amount: 1000, // $10.00
+            currency: 'usd',
+            fund: 'general',
+            frequency: 'one_time',
+            metadata: {
+              firstName: 'Test',
+              lastName: 'User',
+              email: 'test@meauxbility.org',
+              designation: 'general'
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const { clientSecret } = await response.json();
+        addResult(`✅ Payment intent created: ${clientSecret.substring(0, 20)}...`, 'success');
+      } catch (error) {
+        addResult(`❌ Payment intent creation failed: ${error.message}`, 'error');
+      }
+    }
+
+    async function testDonation() {
+      addResult('🔍 Testing complete donation flow...', 'info');
+      
+      try {
+        // This would normally use a test card number
+        addResult('⚠️ Complete donation test requires test card number', 'info');
+        addResult('💡 Use Stripe test cards: 4242424242424242', 'info');
+        addResult('💡 Test with any future expiry date and any CVC', 'info');
+      } catch (error) {
+        addResult(`❌ Donation test failed: ${error.message}`, 'error');
+      }
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', async () => {
+      await initializeStripe();
+    });
+  </script>
+</body>
+</html>
