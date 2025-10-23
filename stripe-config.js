@@ -3,12 +3,12 @@
 
 const STRIPE_CONFIG = {
   // Live API Keys (Replace with your actual keys)
-  publishableKey: 'pk_live_51S4R0SRW56Pm3uYI8EKbysm1ok4peVXSD6G17HtFy8BDuG9Carn8Ry7iPVzulMBtdEFcz5pFvXpE04CIgn8PY6WS00aXOqMYEI',
-  secretKey: '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',
+  publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || 'pk_live_your_live_publishable_key_here',
+  secretKey: process.env.STRIPE_SECRET_KEY || 'sk_live_your_live_secret_key_here',
   
   // Test API Keys (for development)
-  testPublishableKey: 'pk_test_51S4R0SRW56Pm3uYI8EKbysm1ok4peVXSD6G17HtFy8BDuG9Carn8Ry7iPVzulMBtdEFcz5pFvXpE04CIgn8PY6WS00aXOqMYEI',
-  testSecretKey: 'sk_test_51S4R0SRW56Pm3uYI8EKbysm1ok4peVXSD6G17HtFy8BDuG9Carn8Ry7iPVzulMBtdEFcz5pFvXpE04CIgn8PY6WS00aXOqMYEI',
+  testPublishableKey: process.env.STRIPE_TEST_PUBLISHABLE_KEY || 'pk_test_your_test_publishable_key_here',
+  testSecretKey: process.env.STRIPE_TEST_SECRET_KEY || 'sk_test_your_test_secret_key_here',
   
   // Environment
   environment: 'live', // 'test' or 'live'
