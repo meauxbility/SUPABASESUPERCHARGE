@@ -1,0 +1,66 @@
+---
+alwaysApply: true
+description: Environment and API configuration management for Meauxbility and InnerAnimal projects
+---
+
+# Environment & API Configuration Management
+
+## 🎯 **Project Structure**
+This repository contains multiple projects with shared environment configuration:
+- **Meauxbility** (main project) - `/Users/brandonprimeaux/Library/Mobile Documents/com~apple~CloudDocs/Meauxbility/`
+- **InnerAnimal/Spartans** (separate repository) - Referenced but maintained separately
+
+## 🔑 **Environment Variables Structure**
+
+### **Shared Configuration (.env.shared)**
+- `SHARED_*` variables work for both brands
+- `IA_*` variables for InnerAnimals
+- `MX_*` variables for Meauxbility
+- Never commit real secrets to GitHub
+
+### **Key Files to Reference:**
+- [API_KEYS_MASTER_COLLECTION.md](mdc:API_KEYS_MASTER_COLLECTION.md) - Complete API keys list
+- [API_KEYS_COLLECTION_GUIDE.md](mdc:API_KEYS_COLLECTION_GUIDE.md) - Step-by-step setup guide
+- [SUPABASESUPERCHARGE.env](mdc:SUPABASESUPERCHARGE.env) - Current environment template
+- [scripts/collect-all-keys.sh](mdc:scripts/collect-all-keys.sh) - Key collection script
+
+## 🚀 **Deployment Configuration**
+
+### **Render Deployment:**
+- Service URL: `https://supabasesupercharge.onrender.com`
+- Environment variables managed in Render dashboard
+- Custom domain: `meauxbility.com` (target), `meauxbility.org` (current Shopify)
+
+### **Supabase Integration:**
+- Project ID: `ghiulqoqujsiofsjcrqk`
+- URL: `https://ghiulqoqujsiofsjcrqk.supabase.co`
+- Anon Key: Already configured
+- Service Role Key: Needs to be added
+
+## 🔐 **Security Best Practices**
+
+### **Never Commit:**
+- Real API keys
+- Service role keys
+- OAuth secrets
+- Database passwords
+
+### **Always Use:**
+- Environment variables for configuration
+- `.env.example` files with fake values
+- Key collection scripts for verification
+
+## 🎯 **Current Status**
+- ✅ Supabase URL and Anon Key configured
+- ⚠️ Service Role Key needed
+- ⚠️ Anthropic API Key needed
+- ⚠️ GitHub Token needed
+- ⚠️ Render API Key needed
+- ⚠️ Stripe Keys needed
+
+## 📋 **Quick Reference**
+When working with environment variables:
+1. Check [API_KEYS_MASTER_COLLECTION.md](mdc:API_KEYS_MASTER_COLLECTION.md) for complete list
+2. Use [scripts/collect-all-keys.sh](mdc:scripts/collect-all-keys.sh) to verify configuration
+3. Update Render environment variables through dashboard
+4. Never hardcode secrets in source code
