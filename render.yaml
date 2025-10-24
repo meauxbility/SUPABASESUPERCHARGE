@@ -1,70 +1,42 @@
 services:
   - type: web
-    name: meauxbility-app
+    name: meauxbility-dual-site
     env: node
     region: oregon
     plan: starter
     branch: main
     autoDeploy: true
-    rootDir: .  # Serve from root for dual routing - UPDATED
+    rootDir: .  # Serve from root
 
     buildCommand: |
-      echo "Building static site with dual routing..."
-      echo "Deploying home page + admin dashboard..."
-      # No build needed - serving static files
-      echo "✅ Static files ready for dual routing"
+      echo "🚀 Building Meauxbility Dual Site..."
+      npm install
+      echo "✅ Build complete"
 
     startCommand: |
-      # Serve static files with proper routing
-      npx serve -s . -l 3000
+      echo "🚀 Starting Meauxbility Dual Site..."
+      npx serve -s . -l $PORT --single
 
     healthCheckPath: /api/healthz
 
-    # Route configuration for dual setup
-    routes:
-      - type: rewrite
-        source: /admin
-        destination: /admin/index.html
-      - type: rewrite  
-        source: /admin/*
-        destination: /admin/index.html
-      - type: rewrite
-        source: /
-        destination: /index.html
-
+    # Environment Variables
     envVars:
-      # ---------- Public (safe for browser) ----------
-      - key: NEXT_PUBLIC_SUPABASE_URL
-        sync: false
-      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
-        sync: false
-      - key: NEXT_PUBLIC_GA4_MEASUREMENT_ID
-        sync: false
-
-      # ---------- Server-only secrets ----------
-      - key: SUPABASE_SERVICE_ROLE_KEY
-        sync: false
-      - key: STRIPE_SECRET_KEY
-        sync: false
-      - key: STRIPE_WEBHOOK_SECRET
-        sync: false
-      - key: OPENAI_API_KEY
-        sync: false
-      - key: ANTHROPIC_API_KEY
-        sync: false
-      - key: NOTION_API_KEY
-        sync: false
-      - key: GITHUB_TOKEN
-        sync: false
-      - key: SUPABASE_FUNCTION_ASSET_SIGNER_URL
-        sync: false
-      - key: NEXT_PUBLIC_ASSET_SIGNER_URL
-        sync: false
-
-      # ---------- System variables ----------
+      # System
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 3000
-      - key: NEXT_TELEMETRY_DISABLED
-        value: "1"
+      
+      # Supabase (your existing keys)
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        value: https://ghiulqoqujsiofsjcrqk.supabase.co
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoaXVscW9xdWpzaW9mc2pjcnFrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5NjAwOTAsImV4cCI6MjA3NjUzNjA5MH0.gJc7lCi9JMVhNAdon44Zuq5hT15EVM3Oyi-iszfJWSA
+      
+      # Optional (add when you have them)
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
