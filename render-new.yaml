@@ -10,15 +10,12 @@ services:
 
     buildCommand: |
       echo "🚀 Building Meauxbility Dual Site..."
-      echo "Installing dependencies..."
       npm install
-      echo "✅ Dependencies installed"
-      echo "📁 File structure ready"
-      echo "🎯 Dual routing configured"
+      echo "✅ Build complete"
 
     startCommand: |
       echo "🚀 Starting Meauxbility Dual Site..."
-      npx serve -s . -l $PORT
+      npx serve -s . -l $PORT --single
 
     healthCheckPath: /api/healthz
 
