@@ -10,8 +10,9 @@ services:
 
     buildCommand: |
       echo "Building static site with dual routing..."
+      echo "Deploying home page + admin dashboard..."
       # No build needed - serving static files
-      echo "✅ Static files ready"
+      echo "✅ Static files ready for dual routing"
 
     startCommand: |
       # Serve static files with proper routing
