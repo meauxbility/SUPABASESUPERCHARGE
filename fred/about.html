@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About - Meauxbility</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Logo Preload -->
+<link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+
+<!-- Styles -->
+<link rel="stylesheet" href="/fred/css/header.css">
+<link rel="stylesheet" href="/fred/css/global.css">
+
+<!-- Component Loader -->
+<script src="/fred/js/load-components.js"></script>
+
+<!-- GSAP for animations -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<style>
+body {
+  padding-top: var(--nav-h);
+  background: linear-gradient(135deg, #0a1f22 0%, #1a3a3d 50%, #2d5a5d 100%);
+  color: rgba(255,255,255,.95);
+}
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  max-width: 800px;
+  z-index: 2;
+}
+
+.hero-title {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 900;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #4AECDC 0%, #9B59B6 50%, #FF6B35 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 600;
+  margin-bottom: 40px;
+  color: rgba(255,255,255,.8);
+  line-height: 1.4;
+}
+
+.pain-to-purpose {
+  padding: 120px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 60px;
+  background: linear-gradient(135deg, #4AECDC 0%, #9B59B6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.story-content {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 40px;
+  color: rgba(255,255,255,.9);
+}
+
+.story-highlight {
+  background: rgba(74,236,220,.1);
+  border-left: 4px solid #4AECDC;
+  padding: 24px;
+  margin: 32px 0;
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #4AECDC;
+}
+
+.core-values {
+  padding: 120px 20px;
+  background: rgba(0,0,0,.2);
+  backdrop-filter: blur(10px);
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.value-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(74,236,220,.2);
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.value-card:hover {
+  transform: translateY(-8px);
+  border-color: #4AECDC;
+  box-shadow: 0 20px 40px rgba(74,236,220,.1);
+}
+
+.value-icon {
+  font-size: 48px;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.value-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #4AECDC;
+}
+
+.value-description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(255,255,255,.8);
+}
+
+.cta-section {
+  padding: 120px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #FF6B35 0%, #9B59B6 100%);
+}
+
+.cta-title {
+  font-size: clamp(36px, 6vw, 48px);
+  font-weight: 900;
+  margin-bottom: 24px;
+  color: white;
+}
+
+.cta-text {
+  font-size: 20px;
+  margin-bottom: 40px;
+  color: rgba(255,255,255,.9);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  display: inline-block;
+  background: white;
+  color: #FF6B35;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.3);
+  color: #E85D00;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 60px 20px;
+  }
+  
+  .pain-to-purpose,
+  .core-values,
+  .cta-section {
+    padding: 80px 20px;
+  }
+  
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .value-card {
+    padding: 24px;
+  }
+}
+</style>
+</head>
+<body data-theme="dark">
+
+<main id="main">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">From Pain to Purpose</h1>
+      <p class="hero-subtitle">Transforming trauma into triumph, one story at a time</p>
+    </div>
+  </section>
+
+  <!-- Pain to Purpose Story -->
+  <section class="pain-to-purpose">
+    <h2 class="section-title">Our Story</h2>
+    
+    <div class="story-content">
+      <p>Meauxbility was born from the depths of personal struggle and the unwavering belief that our darkest moments can become our greatest sources of strength. Our founder's journey through trauma, addiction, and mental health challenges didn't break them—it became the foundation for something extraordinary.</p>
+      
+      <div class="story-highlight">
+        "What if our pain could become our purpose? What if our struggles could become our superpowers?"
+      </div>
+      
+      <p>This question sparked a movement. We realized that the very experiences that once felt like our greatest weaknesses—the trauma, the addiction, the mental health battles—were actually our greatest teachers. They gave us empathy, resilience, and an unshakeable understanding of what it means to struggle and survive.</p>
+      
+      <p>Today, Meauxbility is more than an organization. It's a community of warriors who've turned their pain into purpose, their struggles into strength, and their trauma into triumph. We're proof that you can not only survive your darkest moments but use them to light the way for others.</p>
+    </div>
+  </section>
+
+  <!-- Core Values -->
+  <section class="core-values">
+    <h2 class="section-title">Our Core Values</h2>
+    
+    <div class="values-grid">
+      <div class="value-card">
+        <span class="value-icon">💪</span>
+        <h3 class="value-title">Resilience</h3>
+        <p class="value-description">We believe that every challenge is an opportunity to grow stronger. Our community has learned to bounce back from setbacks and use adversity as fuel for transformation.</p>
+      </div>
+      
+      <div class="value-card">
+        <span class="value-icon">🤝</span>
+        <h3 class="value-title">Community</h3>
+        <p class="value-description">No one should face their struggles alone. We create safe spaces where individuals can share their stories, find support, and build meaningful connections.</p>
+      </div>
+      
+      <div class="value-card">
+        <span class="value-icon">🌟</span>
+        <h3 class="value-title">Authenticity</h3>
+        <p class="value-description">We embrace our imperfections and share our real stories. Authenticity is the foundation of healing and the key to building genuine connections.</p>
+      </div>
+      
+      <div class="value-card">
+        <span class="value-icon">🚀</span>
+        <h3 class="value-title">Growth</h3>
+        <p class="value-description">We're committed to continuous learning and personal development. Every day is an opportunity to become a better version of ourselves.</p>
+      </div>
+      
+      <div class="value-card">
+        <span class="value-icon">❤️</span>
+        <h3 class="value-title">Compassion</h3>
+        <p class="value-description">We approach every interaction with empathy and understanding. We know that everyone is fighting their own battles, and we meet them with love and support.</p>
+      </div>
+      
+      <div class="value-card">
+        <span class="value-icon">🎯</span>
+        <h3 class="value-title">Purpose</h3>
+        <p class="value-description">We help individuals discover their unique gifts and how their experiences can serve others. Your pain can become your purpose.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <h2 class="cta-title">Ready to Transform Your Pain into Purpose?</h2>
+    <p class="cta-text">Join our community of warriors who are turning their struggles into strength and their trauma into triumph.</p>
+    <a href="/fred/connect.html" class="cta-button">Get Started Today</a>
+  </section>
+</main>
+
+<script>
+// GSAP Animations
+gsap.registerPlugin(ScrollTrigger);
+
+// Hero animation
+gsap.from('.hero-title', {
+  duration: 1.2,
+  y: 100,
+  opacity: 0,
+  ease: 'power3.out'
+});
+
+gsap.from('.hero-subtitle', {
+  duration: 1.2,
+  y: 50,
+  opacity: 0,
+  delay: 0.3,
+  ease: 'power3.out'
+});
+
+// Story content animation
+gsap.from('.story-content p', {
+  duration: 0.8,
+  y: 30,
+  opacity: 0,
+  stagger: 0.2,
+  scrollTrigger: {
+    trigger: '.pain-to-purpose',
+    start: 'top 80%'
+  }
+});
+
+// Values cards animation
+gsap.from('.value-card', {
+  duration: 0.8,
+  y: 50,
+  opacity: 0,
+  stagger: 0.1,
+  scrollTrigger: {
+    trigger: '.values-grid',
+    start: 'top 80%'
+  }
+});
+
+// CTA animation
+gsap.from('.cta-title, .cta-text, .cta-button', {
+  duration: 0.8,
+  y: 30,
+  opacity: 0,
+  stagger: 0.2,
+  scrollTrigger: {
+    trigger: '.cta-section',
+    start: 'top 80%'
+  }
+});
+</script>
+
+</body>
+</html>
