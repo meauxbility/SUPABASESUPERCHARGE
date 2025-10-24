@@ -6,7 +6,7 @@ services:
     plan: starter
     branch: main
     autoDeploy: true
-    rootDir: .  # Serve from root for dual routing
+    rootDir: .  # Serve from root for dual routing - UPDATED
 
     buildCommand: |
       echo "Building static site with dual routing..."
