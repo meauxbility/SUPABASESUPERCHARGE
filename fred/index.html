@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meauxbility - Transform Your Pain into Purpose</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Logo Preload -->
+<link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+
+<!-- Styles -->
+<link rel="stylesheet" href="/fred/css/header.css">
+<link rel="stylesheet" href="/fred/css/global.css">
+
+<!-- Component Loader -->
+<script src="/fred/js/load-components.js"></script>
+
+<style>
+body {
+  padding-top: var(--nav-h);
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #FF6B35 0%, #339999 50%, #9B59B6 100%);
+  color: white;
+}
+
+.hero-content {
+  max-width: 800px;
+}
+
+.hero-title {
+  font-size: clamp(48px, 8vw, 96px);
+  font-weight: 900;
+  margin-bottom: 24px;
+  line-height: 1.1;
+}
+
+.hero-subtitle {
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 600;
+  margin-bottom: 40px;
+  opacity: 0.9;
+  line-height: 1.4;
+}
+
+.hero-cta {
+  display: inline-block;
+  background: white;
+  color: #FF6B35;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,.2);
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.3);
+  color: #E85D00;
+}
+
+.features-section {
+  padding: 120px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 60px;
+  color: #0C2D31;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,.1);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,.15);
+}
+
+.feature-icon {
+  font-size: 48px;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.feature-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #FF6B35;
+}
+
+.feature-description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #546a70;
+}
+
+.cta-section {
+  padding: 120px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #0a1f22 0%, #1a3a3d 100%);
+  color: white;
+}
+
+.cta-title {
+  font-size: clamp(36px, 6vw, 48px);
+  font-weight: 900;
+  margin-bottom: 24px;
+}
+
+.cta-text {
+  font-size: 20px;
+  margin-bottom: 40px;
+  opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  display: inline-block;
+  background: #4AECDC;
+  color: #0a1f22;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(74,236,220,.3);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(74,236,220,.4);
+  background: #5FDDDC;
+}
+
+.cta-button.secondary {
+  background: transparent;
+  color: #4AECDC;
+  border: 2px solid #4AECDC;
+}
+
+.cta-button.secondary:hover {
+  background: #4AECDC;
+  color: #0a1f22;
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 60px 20px;
+  }
+  
+  .features-section,
+  .cta-section {
+    padding: 80px 20px;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+</style>
+</head>
+<body data-theme="light">
+
+<main id="main">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Transform Your Pain into Purpose</h1>
+      <p class="hero-subtitle">Join a community of warriors who've turned their struggles into strength and their trauma into triumph</p>
+      <a href="/fred/about.html" class="hero-cta">Discover Our Story</a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <h2 class="section-title">Why Choose Meauxbility?</h2>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">💪</span>
+        <h3 class="feature-title">Resilience Building</h3>
+        <p class="feature-description">Learn to transform your challenges into opportunities for growth and strength.</p>
+      </div>
+      
+      <div class="feature-card">
+        <span class="feature-icon">🤝</span>
+        <h3 class="feature-title">Community Support</h3>
+        <p class="feature-description">Connect with others who understand your journey and can provide genuine support.</p>
+      </div>
+      
+      <div class="feature-card">
+        <span class="feature-icon">🌟</span>
+        <h3 class="feature-title">Authentic Growth</h3>
+        <p class="feature-description">Embrace your authentic self while building the life you truly want to live.</p>
+      </div>
+      
+      <div class="feature-card">
+        <span class="feature-icon">🚀</span>
+        <h3 class="feature-title">Purpose Discovery</h3>
+        <p class="feature-description">Turn your experiences into tools for helping others and finding your true purpose.</p>
+      </div>
+      
+      <div class="feature-card">
+        <span class="feature-icon">❤️</span>
+        <h3 class="feature-title">Compassionate Care</h3>
+        <p class="feature-description">Experience support that comes from people who've walked similar paths.</p>
+      </div>
+      
+      <div class="feature-card">
+        <span class="feature-icon">🎯</span>
+        <h3 class="feature-title">Proven Methods</h3>
+        <p class="feature-description">Access evidence-based approaches that have helped thousands transform their lives.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="cta-section">
+    <h2 class="cta-title">Ready to Begin Your Transformation?</h2>
+    <p class="cta-text">Join thousands of individuals who've discovered that their pain can become their greatest source of strength and purpose.</p>
+    <div class="cta-buttons">
+      <a href="/fred/connect.html" class="cta-button">Get Started Today</a>
+      <a href="/fred/about.html" class="cta-button secondary">Learn More</a>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
